@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buddhika Sankalpa - 3D Portfolio</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    
+    <!-- දකුණු පස ඇති බොත්තම් -->
+    <div class="ui-buttons">
+        <button id="theme-btn" class="icon-btn">🌓</button>
+        <button id="menu-btn" class="icon-btn hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <!-- Popup මෙනුව -->
+    <div id="info-popup" class="popup-overlay hidden">
+        <div class="popup-container">
+            <!-- උඩින් ඇති Tab Bar එක -->
+            <div class="popup-header">
+                <div class="tabs">
+                    <button class="tab-btn active" data-target="about">🏠</button>
+                    <button class="tab-btn" data-target="skills">⚙️</button>
+                    <button class="tab-btn" data-target="experience">💻</button>
+                    <button class="tab-btn" data-target="awards">🏅</button>
+                    <button class="tab-btn" data-target="contact">✉️</button>
+                </div>
+                <button id="close-btn" class="close-btn">❌</button>
+            </div>
+
+            <!-- Content වෙනස් වන කොටස -->
+            <div class="popup-content">
+                <!-- 1. About Section -->
+                <div id="about" class="content-section active">
+                    <h2>ABOUT ME</h2>
+                    <p>Welcome!</p>
+                    <p>My name is <strong>Buddhika Sankalpa</strong>, and I'm a full-stack web developer with a strong focus on the MERN stack.</p>
+                    <p>This is my interactive 3D portfolio. Please look around to discover my work and tech stack.</p>
+                </div>
+
+                <!-- 2. Skills Section -->
+                <div id="skills" class="content-section hidden">
+                    <h2>EDUCATION & SKILLS</h2>
+                    <ul>
+                        <li><strong>Education:</strong> Physics and Electronics</li>
+                        <li><strong>Tech Stack:</strong> MongoDB, Express, React, Node.js</li>
+                        <li><strong>Tools:</strong> Tailwind CSS, Vite, Three.js</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Experience Section -->
+                <div id="experience" class="content-section hidden">
+                    <h2>PROJECTS & EXPERIENCE</h2>
+                    <ul>
+                        <li><strong>The Ceylon Tea Experience:</strong> Full-stack web project.</li>
+                        <li><strong>Educore:</strong> Education platform.</li>
+                        <li><strong>Machine Learning:</strong> Laptop price prediction AI model.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Awards Section -->
+                <div id="awards" class="content-section hidden">
+                    <h2>CERTIFICATIONS & AWARDS</h2>
+                    <p>Details about certifications, achievements, and cybersecurity highlights go here.</p>
+                </div>
+
+                <!-- 5. Contact Section -->
+                <div id="contact" class="content-section hidden">
+                    <h2>CONTACT</h2>
+                    <p>Get in touch for services or collaborations.</p>
+                    <ul>
+                        <li>Email: your.email@example.com</li>
+                        <li>Social: GitHub | LinkedIn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ... කලින් තිබූ Popup මෙනු කේතය ... -->
+    </div> <!-- (Popup එකේ අවසාන div එක) -->
+
+    <!-- අලුතින් එකතු කරන Points 5 -->
+    <div class="point point-0">
+        <div class="label">1</div>
+        <div class="text"><strong>About Me:</strong> Full-stack MERN developer creating interactive web experiences.</div>
+    </div>
+    <div class="point point-1">
+        <div class="label">2</div>
+        <div class="text"><strong>Education & Skills:</strong> Physics and Electronics, specializing in modern UI/UX and React.</div>
+    </div>
+    <div class="point point-2">
+        <div class="label">3</div>
+        <div class="text"><strong>Projects:</strong> Explore 'The Ceylon Tea Experience' and my AI laptop price prediction models.</div>
+    </div>
+    <div class="point point-3">
+        <div class="label">4</div>
+        <div class="text"><strong>Awards & Cyber:</strong> Experience with Wazuh server monitoring, Tor networks, and security.</div>
+    </div>
+    <div class="point point-4">
+        <div class="label">5</div>
+        <div class="text"><strong>Contact:</strong> Let's collaborate on your next digital platform.</div>
+    </div>
+
+    <!-- 3D Canvas -->
+    <canvas class="webgl"></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
