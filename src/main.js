@@ -5,11 +5,24 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import firefliesVertexShader from './shaders/fireflies/vertex.glsl?raw'
 import firefliesFragmentShader from './shaders/fireflies/fragment.glsl?raw'
 
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+
 import gsap from 'gsap'
 
 // Canvas & Scene
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
+
+/**
+ * Loading Manager (ඔක්කොම load වෙනකන් canvas එක hide කරලා තියලා, ඉවර උනාට පස්සෙ fade-in කිරීමට)
+ */
+const loadingManager = new THREE.LoadingManager(
+    () => {
+        // Model, texture, font ඔක්කොම load වුනාට පස්සෙ canvas එක fade-in කිරීම
+        canvas.classList.add('loaded')
+    }
+)
 
 /**
  * Lights (ආලෝකය)
@@ -29,19 +42,35 @@ let sceneReady = false; // Points හැංගීමට
 /**
  * Model Load කිරීම
  */
-const gltfLoader = new GLTFLoader()
+const gltfLoader = new GLTFLoader(loadingManager)
 const modelGroup = new THREE.Group()
 scene.add(modelGroup)
+
+// 👇 FIX: Console log එකෙන් හම්බුණ "Final_Bridge1_SF_Bridge_Mat_0" සහ
+// "Final_Bridge1_SF_Rail_Mat_0" කියන mesh දෙක තමයි pink/cream diagonal
+// stripes එකට හේතුව (දිග bridge/rail geometry එකක් island එකෙන් එහාට extend වෙනවා).
+// ඒ නමට match වෙන meshes traverse එකේදීම hide කරලා දානවා.
+const HIDDEN_MESH_KEYWORDS = ['Bridge_Mat', 'Rail_Mat']
 
 gltfLoader.load(
     '/models/stylized_3d_floating_island_and_mine_house.glb', 
     (gltf) => {
         const room = gltf.scene
-        
         room.position.set(0, -0.15, 0) 
         
         room.traverse((child) => {
             if (child.isMesh) {
+                console.log('Mesh name:', child.name, '| Material:', child.material.name)
+
+                // 👇 FIX: Bridge/Rail mesh එක නම, render කරන්නම එපා
+                const isUnwantedMesh = HIDDEN_MESH_KEYWORDS.some((keyword) =>
+                    child.name.includes(keyword) || child.material?.name?.includes(keyword)
+                )
+                if (isUnwantedMesh) {
+                    child.visible = false
+                    return
+                }
+
                 child.castShadow = true
                 child.receiveShadow = true
                 if (child.material.map) {
@@ -51,14 +80,9 @@ gltfLoader.load(
         })
         
         modelGroup.add(room)
-
-        // Model එක සම්පූර්ණයෙන් ලෝඩ් වූ පසු Points පෙන්වීමට sceneReady true කිරීම
-        setTimeout(() => {
-            sceneReady = true;
-        }, 1000); 
+        setTimeout(() => { sceneReady = true }, 1000)
     }
 )
-
 
 /**
  * Airplane Model Load කිරීම
@@ -90,6 +114,173 @@ gltfLoader.load(
         modelGroup.add(airplane); 
     }
 );
+
+/**
+ * Potion Brewer Island Model Load කිරීම
+ */
+let potionIsland = null;
+let rock2 = null;
+let rock3 = null;
+let rock4 = null;
+let rock5 = null;
+
+// 👇 FIX: rock2-rock5 clones ටිකත් tick() එකේදී loop කරලා animate කරන්න
+// පුළුවන් වෙන්න array එකකට දාගන්නවා (කලින් potionIsland එකට විතරයි animation තිබුණේ)
+const floatingRocks = []
+
+gltfLoader.load(
+    '/models/a_rock.glb', // ඔයාගේ අලුත් ෆයිල් එකේ නම
+    (gltf) => {
+        potionIsland = gltf.scene;
+        
+        // Size එක
+        potionIsland.scale.set(0.00099, 0.00099, 0.00099);   
+        // Position එක (සුදු කොටුව තිබුණු හරිය)
+        potionIsland.position.set(-1.0, 10, 1.0); 
+        // දූපත ටිකක් හැරවීම
+        potionIsland.rotation.y = Math.PI / 4; 
+
+        potionIsland.traverse((child) => {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+                if (child.material.map) {
+                   child.material.map.colorSpace = THREE.SRGBColorSpace;
+                }
+            }
+        });
+        
+        // Model Group එකට එකතු කිරීම
+        modelGroup.add(potionIsland); 
+        floatingRocks.push({ mesh: potionIsland, baseY: -0.2, speed: 1.2, amp: 0.05 }) // 👈 FIX: array එකට එකතු කිරීම
+
+        // --- දෙවැනි ගල එකතු කිරීම (Clone කිරීම) ------------------------------------------------
+
+        // Clone කිරීමෙන් load වුණු model එකේම තවත් පිටපතක් හැදේ
+        rock2 = potionIsland.clone(); 
+        
+        // දකුණු පසින් (X ධන අගයක්) සහ දුරින් (Z සෘණ අගයක්) පිහිටුවීම
+        // ඔයාට අවශ්‍ය විදිහට මේ අගයන් වෙනස් කරගන්න (X, Y, Z)
+        rock2.position.set(0, -1, -1.5); 
+        
+        // දෙවැනි ගලේ පෙනුම ස්වභාවික කරන්න ටිකක් වෙනස් අතකට හරවමු
+        rock2.rotation.y = Math.PI / 1.5; 
+        rock2.rotation.z = Math.PI / 8; // ලාවට ඇල කිරීම
+        
+        // අවශ්‍ය නම් දෙවැනි ගලේ සයිස් එකත් වෙනස් කරන්න පුළුවන්
+        rock2.scale.set(0.0007, 0.0007, 0.0007); 
+        
+        // Model Group එකට එකතු කිරීම
+        modelGroup.add(rock2); 
+        floatingRocks.push({ mesh: rock2, baseY: -1, speed: 1.0, amp: 0.04 }) // 👈 FIX: array එකට එකතු කිරීම
+
+        // --- තෙවැනි ගල එකතු කිරීම (Clone කිරීම) ------------------------------------------------
+        rock3 = potionIsland.clone();
+        
+        // තෙවැනි ගලේ පිහිටීම (X, Y, Z) වෙනස් කරන්න
+        rock3.position.set(1.2, -0.5, 0.5);
+        
+        // තෙවැනි ගලේ rotation වෙනස් කිරීම
+        rock3.rotation.y = Math.PI / 3; 
+        rock3.rotation.z = -Math.PI / 10;
+        
+        // තෙවැනි ගලේ සයිස් එක වෙනස් කිරීම
+        rock3.scale.set(0.0006, 0.0006, 0.0006);
+        
+        // Model Group එකට එකතු කිරීම
+        modelGroup.add(rock3);
+        floatingRocks.push({ mesh: rock3, baseY: -0.5, speed: 1.4, amp: 0.05 }) // 👈 FIX: array එකට එකතු කිරීම
+
+        // --- හතරවැනි ගල එකතු කිරීම (Clone කිරීම) ------------------------------------------------
+        rock4 = potionIsland.clone();
+        
+        // හතරවැනි ගලේ පිහිටීම (X, Y, Z) වෙනස් කරන්න
+        rock4.position.set(-1.5, -0.8, -0.5);
+        
+        // හතරවැනි ගලේ rotation වෙනස් කිරීම
+        rock4.rotation.y = -Math.PI / 2; 
+        rock4.rotation.z = Math.PI / 12;
+        
+        // හතරවැනි ගලේ සයිස් එක වෙනස් කිරීම
+        rock4.scale.set(0.0005, 0.0005, 0.0005);
+        
+        // Model Group එකට එකතු කිරීම
+        modelGroup.add(rock4);
+        floatingRocks.push({ mesh: rock4, baseY: -0.8, speed: 0.9, amp: 0.06 }) // 👈 FIX: array එකට එකතු කිරීම
+
+        // --- පස්වැනි ගල එකතු කිරීම (Clone කිරීම) ------------------------------------------------
+        rock5 = potionIsland.clone();
+
+        // පස්වැනි ගලේ පිහිටීම (X, Y, Z) වෙනස් කරන්න
+        rock5.position.set(0.8, -1.2, -1.2);
+
+        // පස්වැනි ගලේ rotation වෙනස් කිරීම
+        rock5.rotation.y = Math.PI / 6; 
+        rock5.rotation.z = -Math.PI / 15;
+
+        // පස්වැනි ගලේ සයිස් එක වෙනස් කිරීම
+        rock5.scale.set(0.0004, 0.0004, 0.0004);
+
+        // Model Group එකට එකතු කිරීම
+        modelGroup.add(rock5);
+        floatingRocks.push({ mesh: rock5, baseY: -1.2, speed: 1.1, amp: 0.045 }) // 👈 FIX: array එකට එකතු කිරීම
+    }
+);
+
+/**
+ * 3D Text (ඔයාගේ නම) එකතු කිරීම
+ */
+// const textureLoader = new THREE.TextureLoader(loadingManager)
+// const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
+// matcapTexture.colorSpace = THREE.SRGBColorSpace 
+
+// const fontLoader = new FontLoader(loadingManager)
+
+// // 👇 මෙතන Path එක ඔයාගේ ෆෝල්ඩරයට ගැලපෙන විදිහට '/fonts/...' ලෙස වෙනස් කර ඇත
+// fontLoader.load(
+//     '/fonts/helvetiker_regular.typeface.json',
+//     (font) => {
+//         const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
+
+//         const textGeometry = new TextGeometry(
+//             'BUDDHIKA SANKALPA',
+//             {
+//                 font: font,
+//                 size: 0.4,
+//                 height: 0.08,
+//                 curveSegments: 12,
+//                 bevelEnabled: true,
+//                 bevelThickness: 0.03,
+//                 bevelSize: 0.02,
+//                 bevelOffset: 0,
+//                 bevelSegments: 5
+//             }
+//         )
+        
+//         textGeometry.center()
+//         textGeometry.computeVertexNormals()
+
+//         const textMesh = new THREE.Mesh(textGeometry, textMaterial)
+
+//         // Scale එක සහ Position එක ගෙදරට උඩින් පිහිටුවීම
+//         textMesh.scale.set(0.15, 0.15, 0.15)
+//         textMesh.position.set(0, 1.3, -0.3) 
+
+//         // කැමරාවට මුහුණලා පේන්න හැරවීම
+//         textMesh.rotation.y = Math.PI / 4 
+//         textMesh.rotation.x = -Math.PI / 10 
+        
+//         textMesh.castShadow = true
+
+//         modelGroup.add(textMesh)
+//     },
+//     undefined,
+//     (error) => {
+//         console.error('Font load වීමේ දෝෂයක්:', error)
+//     }
+// )
+
+
 
 /**
  * Points of Interest (Hotspots)
@@ -310,6 +501,13 @@ const tick = () => {
         airplane.rotation.z = Math.sin(elapsedTime * 2) * 0.1;
     }
 
+    // --- Potion Brewer Island Floating Animation ---
+    // 👇 FIX: potionIsland විතරක් නෙවෙයි, floatingRocks array එකේ ඉන්න
+    // rock2-rock5 clones ටිකත් ඔක්කොම වෙන වෙනම float කරන්න loop කරනවා
+    floatingRocks.forEach((rock) => {
+        rock.mesh.position.y = rock.baseY + Math.sin(elapsedTime * rock.speed) * rock.amp
+    })
+
     controls.update() 
 
     // --- Points Update (බාධක වලින් හැංගෙන එක අයින් කර ඇත) ---
@@ -339,6 +537,9 @@ const tick = () => {
 }
 
 tick()
+
+
+
 
 /**
  * UI Interactions
