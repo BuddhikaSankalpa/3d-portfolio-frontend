@@ -222,6 +222,49 @@ gltfLoader.load('/models/duck_animation.glb', (gltf) => {
     console.error('Could not load the pond duck:', error)
 })
 
+/** Animated butterflies above the trees beside the upper roof. */
+const butterflyPlacement = {
+    span: 0.10,
+    position: new THREE.Vector3(-0.12, 0.43, -0.34),
+    rotationY: Math.PI / 5
+}
+let butterflyMixer = null
+let butterflyFlight = null
+
+gltfLoader.load('/models/butterflies.glb', (gltf) => {
+    const butterflies = gltf.scene
+    butterflyFlight = new THREE.Group()
+    butterflyFlight.name = 'Butterflies above the garden'
+    butterflyFlight.position.copy(butterflyPlacement.position)
+    butterflyFlight.rotation.y = butterflyPlacement.rotationY
+    butterflies.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = false
+            child.receiveShadow = false
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+    if (gltf.animations.length) {
+        butterflyMixer = new THREE.AnimationMixer(butterflies)
+        gltf.animations.forEach(clip => butterflyMixer.clipAction(clip).play())
+        butterflyMixer.update(0)
+    }
+    butterflies.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(butterflies)
+    const size = bounds.getSize(new THREE.Vector3())
+    const scale = butterflyPlacement.span / Math.max(size.x, size.y, size.z)
+    const center = bounds.getCenter(new THREE.Vector3())
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    fit.position.copy(center).multiplyScalar(-scale)
+    fit.add(butterflies)
+    butterflyFlight.add(fit)
+    modelGroup.add(butterflyFlight)
+}, undefined, (error) => {
+    console.error('Could not load the garden butterflies:', error)
+})
+
 /** Waving host on the open lawn to the left of the front steps. */
 const wavingPlacement = {
     height: 0.19,
@@ -248,6 +291,48 @@ wavingLoader.register(parser => ({
         }
     }
 }))
+// This loader also supports the rabbit's legacy textured material.
+const rabbitPlacement = {
+    height: 0.060,
+    position: new THREE.Vector3(0.47, -0.3328, -0.18),
+    rotationY: Math.PI / 4
+}
+let rabbitMixer = null
+
+wavingLoader.load('/models/rabbit_realistic.glb', (gltf) => {
+    const rabbit = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'Rabbit on the grassy ledge'
+    anchor.position.copy(rabbitPlacement.position)
+    anchor.rotation.y = rabbitPlacement.rotationY
+    rabbit.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            child.receiveShadow = false
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+    const idleClip = gltf.animations.find(clip => /idle/i.test(clip.name))
+    if (idleClip) {
+        rabbitMixer = new THREE.AnimationMixer(rabbit)
+        rabbitMixer.clipAction(idleClip).play()
+        rabbitMixer.update(0)
+    }
+    rabbit.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(rabbit)
+    const scale = rabbitPlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    fit.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    fit.add(rabbit)
+    anchor.add(fit)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the rabbit on the ledge:', error)
+})
+
 wavingLoader.load('/models/waving.glb', (gltf) => {
     const character = gltf.scene
     const anchor = new THREE.Group()
@@ -671,6 +756,17 @@ const tick = () => {
     if (horseMixer) horseMixer.update(Math.min(deltaTime, 0.05))
     if (dogMixer) dogMixer.update(Math.min(deltaTime, 0.05))
     if (duckMixer) duckMixer.update(Math.min(deltaTime, 0.05))
+    if (rabbitMixer) rabbitMixer.update(Math.min(deltaTime, 0.05))
+    if (butterflyMixer) butterflyMixer.update(Math.min(deltaTime, 0.05))
+    if (butterflyFlight) {
+        const flightTime = elapsedTime * 0.65
+        butterflyFlight.position.set(
+            butterflyPlacement.position.x + Math.sin(flightTime) * 0.012,
+            butterflyPlacement.position.y + Math.sin(flightTime * 1.7) * 0.008,
+            butterflyPlacement.position.z + Math.cos(flightTime) * 0.010
+        )
+        butterflyFlight.rotation.y = butterflyPlacement.rotationY + Math.sin(flightTime) * 0.2
+    }
     if (wavingMixer) wavingMixer.update(Math.min(deltaTime, 0.05))
     firefliesMaterial.uniforms.uTime.value = elapsedTime
 
