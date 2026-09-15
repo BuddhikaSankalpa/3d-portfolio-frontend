@@ -341,16 +341,7 @@ points.forEach((point) => {
             // 👇 Zoom Animation එක සම්පූර්ණයෙන්ම අවසන් වූ පසු මෙය ක්‍රියාත්මක වේ 👇
             onComplete: () => {
                 // 3. අදාල Popup Section එක විවෘත කිරීම
-                popupOverlay.classList.remove('hidden');
-                
-                // සියලුම tabs අක්‍රිය කිරීම
-                tabButtons.forEach(b => b.classList.remove('active'));
-                contentSections.forEach(s => s.classList.remove('active'));
-
-                // ක්ලික් කළ point එකට අදාල tab එක සක්‍රිය කිරීම
-                const targetBtn = document.querySelector(`.tab-btn[data-target="${point.targetTab}"]`);
-                if(targetBtn) targetBtn.classList.add('active');
-                document.getElementById(point.targetTab).classList.add('active');
+                openPopup(point.targetTab, point.element.querySelector('.label'));
             }
         });
     });
@@ -551,38 +542,65 @@ const popupOverlay = document.getElementById('info-popup');
 const tabButtons = document.querySelectorAll('.tab-btn');
 const contentSections = document.querySelectorAll('.content-section');
 
-// Menu විවෘත කිරීම
-menuBtn.addEventListener('click', () => {
-    popupOverlay.classList.remove('hidden');
-});
-
-// Menu වසා දැමීම සහ Zoom Out වීම
-closeBtn.addEventListener('click', () => {
-    popupOverlay.classList.add('hidden'); // Popup එක හංගන්න
-
-    // 1. කැමරාව ආපහු මුල් Zoom අගයට (1) ගෙන ඒම
-    gsap.to(camera, {
-        zoom: 1, 
-        duration: 1.5,
-        ease: 'power3.inOut',
-        onUpdate: () => {
-            camera.updateProjectionMatrix();
+let popupTrigger = menuBtn;
+const popupContainer = document.querySelector('.popup-container');
+const popupContent = document.querySelector('.popup-content');
+function selectTab(targetId, focus = false) {
+    tabButtons.forEach(button => {
+        const active = button.dataset.target === targetId;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+        button.tabIndex = active ? 0 : -1;
+        if (active && focus) {
+            button.focus();
+            button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
         }
     });
-
-    // 2. කැමරාවේ Target එක ආපහු මුළු ගෙදරම පේන විදිහට මැදට (0,0,0) ගෙන ඒම
-    gsap.to(controls.target, {
-        x: 0,
-        y: 0,
-        z: 0,
-        duration: 1.5,
-        ease: 'power3.inOut'
+    contentSections.forEach(section => {
+        const active = section.id === targetId;
+        section.classList.toggle('active', active);
+        section.hidden = !active;
     });
+    popupContent.scrollTop = 0;
+}
+function openPopup(targetId = document.querySelector('.tab-btn.active').dataset.target, trigger = menuBtn) {
+    popupTrigger = trigger;
+    popupOverlay.classList.remove('hidden');
+    popupOverlay.inert = false;
+    controls.enabled = false;
+    selectTab(targetId, true);
+}
+function closePopup() {
+    popupOverlay.classList.add('hidden');
+    popupOverlay.inert = true;
+    controls.enabled = true;
+    popupTrigger.focus();
+    gsap.to(camera, { zoom: 1, duration: 1.5, ease: 'power3.inOut', overwrite: true,
+        onUpdate: () => camera.updateProjectionMatrix() });
+    gsap.to(controls.target, { x: 0, y: 0, z: 0, duration: 1.5, ease: 'power3.inOut', overwrite: true });
+}
+menuBtn.addEventListener('click', () => openPopup());
+closeBtn.addEventListener('click', closePopup);
+popupOverlay.addEventListener('click', event => { if (event.target === popupOverlay) closePopup(); });
+document.addEventListener('keydown', event => {
+    if (popupOverlay.classList.contains('hidden')) return;
+    if (event.key === 'Escape') closePopup();
+    if (event.key === 'Tab') {
+        const focusable = [...popupContainer.querySelectorAll('button, a[href], [tabindex="0"]')]
+            .filter(element => element.tabIndex >= 0 && element.getClientRects().length);
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+});
+document.querySelectorAll('[data-section]').forEach(button => {
+    button.addEventListener('click', () => selectTab(button.dataset.section, true));
 });
 
 // Theme මාරු කිරීම (Dark / Light) - Smooth Effect
 themeBtn.addEventListener('click', () => {
     const isLightMode = document.body.classList.toggle('light-mode');
+    themeBtn.setAttribute('aria-pressed', String(isLightMode));
     
     if (isLightMode) {
         // 1. තරු ටික smooth විදිහට කුඩා වී මැකී යාම (Size එක 0 කිරීම)
@@ -601,16 +619,15 @@ themeBtn.addEventListener('click', () => {
     }
 });
 
-// Tabs අතර මාරු වීම
-tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Active styles ඉවත් කිරීම
-        tabButtons.forEach(b => b.classList.remove('active'));
-        contentSections.forEach(s => s.classList.remove('active'));
-
-        // ක්ලික් කළ Tab එක Active කිරීම
-        btn.classList.add('active');
-        const targetId = btn.getAttribute('data-target');
-        document.getElementById(targetId).classList.add('active');
+// Accessible tab navigation.
+tabButtons.forEach((button, index) => {
+    button.addEventListener('click', () => selectTab(button.dataset.target));
+    button.addEventListener('keydown', event => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabButtons.length;
+        if (event.key === 'ArrowLeft') next = (index - 1 + tabButtons.length) % tabButtons.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabButtons.length - 1;
+        if (next !== undefined) { event.preventDefault(); selectTab(tabButtons[next].dataset.target, true); }
     });
 });

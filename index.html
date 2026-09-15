@@ -1,113 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buddhika Sankalpa - 3D Portfolio</title>
-    <link rel="stylesheet" href="/src/style.css" />
-  </head>
-  <body>
-    
-    <!-- දකුණු පස ඇති බොත්තම් -->
-    <div class="ui-buttons">
-        <button id="theme-btn" class="icon-btn">🌓</button>
-        <button id="menu-btn" class="icon-btn hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-
-    <!-- Popup මෙනුව -->
-    <div id="info-popup" class="popup-overlay hidden">
-        <div class="popup-container">
-            <!-- උඩින් ඇති Tab Bar එක -->
-            <div class="popup-header">
-                <div class="tabs">
-                    <button class="tab-btn active" data-target="about">🏠</button>
-                    <button class="tab-btn" data-target="skills">⚙️</button>
-                    <button class="tab-btn" data-target="experience">💻</button>
-                    <button class="tab-btn" data-target="awards">🏅</button>
-                    <button class="tab-btn" data-target="contact">✉️</button>
-                </div>
-                <button id="close-btn" class="close-btn">❌</button>
-            </div>
-
-            <!-- Content වෙනස් වන කොටස -->
-            <div class="popup-content">
-                <!-- 1. About Section -->
-                <div id="about" class="content-section active">
-                    <h2>ABOUT ME</h2>
-                    <p>Welcome!</p>
-                    <p>My name is <strong>Buddhika Sankalpa</strong>, and I'm a full-stack web developer with a strong focus on the MERN stack.</p>
-                    <p>This is my interactive 3D portfolio. Please look around to discover my work and tech stack.</p>
-                </div>
-
-                <!-- 2. Skills Section -->
-                <div id="skills" class="content-section hidden">
-                    <h2>EDUCATION & SKILLS</h2>
-                    <ul>
-                        <li><strong>Education:</strong> Physics and Electronics</li>
-                        <li><strong>Tech Stack:</strong> MongoDB, Express, React, Node.js</li>
-                        <li><strong>Tools:</strong> Tailwind CSS, Vite, Three.js</li>
-                    </ul>
-                </div>
-
-                <!-- 3. Experience Section -->
-                <div id="experience" class="content-section hidden">
-                    <h2>PROJECTS & EXPERIENCE</h2>
-                    <ul>
-                        <li><strong>The Ceylon Tea Experience:</strong> Full-stack web project.</li>
-                        <li><strong>Educore:</strong> Education platform.</li>
-                        <li><strong>Machine Learning:</strong> Laptop price prediction AI model.</li>
-                    </ul>
-                </div>
-
-                <!-- 4. Awards Section -->
-                <div id="awards" class="content-section hidden">
-                    <h2>CERTIFICATIONS & AWARDS</h2>
-                    <p>Details about certifications, achievements, and cybersecurity highlights go here.</p>
-                </div>
-
-                <!-- 5. Contact Section -->
-                <div id="contact" class="content-section hidden">
-                    <h2>CONTACT</h2>
-                    <p>Get in touch for services or collaborations.</p>
-                    <ul>
-                        <li>Email: your.email@example.com</li>
-                        <li>Social: GitHub | LinkedIn</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ... කලින් තිබූ Popup මෙනු කේතය ... -->
-    </div> <!-- (Popup එකේ අවසාන div එක) -->
-
-    <!-- අලුතින් එකතු කරන Points 5 -->
-    <div class="point point-0">
-        <div class="label">1</div>
-        <div class="text"><strong>About Me:</strong> Full-stack MERN developer creating interactive web experiences.</div>
-    </div>
-    <div class="point point-1">
-        <div class="label">2</div>
-        <div class="text"><strong>Education & Skills:</strong> Physics and Electronics, specializing in modern UI/UX and React.</div>
-    </div>
-    <div class="point point-2">
-        <div class="label">3</div>
-        <div class="text"><strong>Projects:</strong> Explore 'The Ceylon Tea Experience' and my AI laptop price prediction models.</div>
-    </div>
-    <div class="point point-3">
-        <div class="label">4</div>
-        <div class="text"><strong>Awards & Cyber:</strong> Experience with Wazuh server monitoring, Tor networks, and security.</div>
-    </div>
-    <div class="point point-4">
-        <div class="label">5</div>
-        <div class="text"><strong>Contact:</strong> Let's collaborate on your next digital platform.</div>
-    </div>
-
-    <!-- 3D Canvas -->
-    <canvas class="webgl"></canvas>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="W. A Buddhika Sankalpa — Electronics & Computer Science student at the University of Kelaniya. Explore my projects, skills, and journey toward IoT engineering.">
+<title>Buddhika Sankalpa — 3D Portfolio</title>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<div class="scene-brand">
+<span class="brand-mark">BS.</span>
+<span>BUDDHIKA SANKALPA<small>Electronics &amp; Computer Science</small>
+</span>
+</div>
+<div class="ui-buttons">
+<button id="theme-btn" class="icon-btn" aria-label="Toggle light theme" aria-pressed="false">◐</button>
+<button id="menu-btn" class="icon-btn hamburger" aria-label="Open portfolio" aria-haspopup="dialog">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+</button>
+</div>
+<div id="info-popup" class="popup-overlay hidden" inert>
+<div class="popup-container" role="dialog" aria-modal="true" aria-label="Buddhika Sankalpa portfolio">
+<div class="popup-topline">
+<span>
+<b>BS.</b> THE PORTFOLIO</span>
+<button id="close-btn" class="close-btn" aria-label="Close portfolio">×</button>
+</div>
+<div class="popup-header">
+<div class="tabs" role="tablist" aria-label="Portfolio sections">
+<button id="tab-about" class="tab-btn active" data-target="about" role="tab" aria-controls="about" aria-selected="true" tabindex="0">
+<span>01</span>About</button>
+<button id="tab-skills" class="tab-btn " data-target="skills" role="tab" aria-controls="skills" aria-selected="false" tabindex="-1">
+<span>02</span>Skills & Education</button>
+<button id="tab-experience" class="tab-btn " data-target="experience" role="tab" aria-controls="experience" aria-selected="false" tabindex="-1">
+<span>03</span>Projects & Experience</button>
+<button id="tab-awards" class="tab-btn " data-target="awards" role="tab" aria-controls="awards" aria-selected="false" tabindex="-1">
+<span>04</span>Certifications</button>
+<button id="tab-contact" class="tab-btn " data-target="contact" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">
+<span>05</span>Contact</button>
+</div>
+</div>
+<div class="popup-content">
+<section id="about" class="content-section active" role="tabpanel" aria-labelledby="tab-about" tabindex="0" >
+<div class="section-heading">
+<span class="eyebrow">01 / A little about me</span>
+<h1>Curious mind.<br>
+<em>Purposeful code.</em>
+</h1>
+<p class="intro">I'm W. A Buddhika Sankalpa, an Electronics &amp; Computer Science student at the University of Kelaniya.</p>
+</div>
+<div class="about-grid">
+<article class="card profile-card">
+<div class="monogram">BS<span>✦</span>
+</div>
+<span class="eyebrow">Hello, I'm Buddhika</span>
+<h3>Connecting software<br>with the physical world.</h3>
+<p>I build full-stack web applications and explore electronics, embedded systems, and AI. My goal is to become an IoT Engineer and create useful experiences where hardware and software meet.</p>
+<div class="actions">
+<button class="primary-link" data-section="experience">Explore my projects ↗</button>
+<a class="text-link" href="mailto:buddhikasankalpa304@gmail.com?subject=CV%20request">Request my CV ↗</a>
+</div>
+</article>
+<div class="about-facts">
+<article class="card">
+<span class="card-icon">⌘</span>
+<h3>Electronics &amp;<br>Computer Science</h3>
+<p>University of Kelaniya</p>
+<span class="pill">Expected graduation · 2028</span>
+</article>
+<article class="card">
+<span class="eyebrow">The direction</span>
+<h3>Aspiring IoT Engineer</h3>
+<p>Web development, intelligent systems, and connected devices.</p>
+</article>
+</div>
+</div>
+</section>
+<section id="skills" class="content-section " role="tabpanel" aria-labelledby="tab-skills" tabindex="0" hidden>
+<div class="section-heading">
+<span class="eyebrow">02 / My toolkit</span>
+<h2>Ideas into <em>implementation.</em>
+</h2>
+<p>The technologies I work with, and the education behind them.</p>
+</div>
+<div class="skill-grid">
+<article class="card">
+<h3>Programming & foundations</h3>
+<p>The languages behind my work.</p>
+<div class="chips">
+<span>Java</span>
+<span>C</span>
+<span>JavaScript</span>
+<span>TypeScript</span>
+<span>Python</span>
+<span>PHP</span>
+<span>HTML</span>
+<span>CSS</span>
+</div>
+</article>
+<article class="card">
+<h3>Web & cloud</h3>
+<p>From interfaces to server-side applications.</p>
+<div class="chips">
+<span>React</span>
+<span>Next.js</span>
+<span>Node.js</span>
+<span>Express</span>
+<span>MongoDB</span>
+<span>Supabase</span>
+<span>AWS</span>
+<span>Three.js</span>
+</div>
+</article>
+<article class="card">
+<h3>Tools & intelligent systems</h3>
+<p>Design, collaboration, electronics, and AI.</p>
+<div class="chips">
+<span>Git</span>
+<span>GitHub</span>
+<span>Figma</span>
+<span>Proteus</span>
+<span>Kali Linux</span>
+<span>TensorFlow</span>
+</div>
+</article>
+<article class="card">
+<h3>Creative tools</h3>
+<p>Video editing and visual storytelling.</p>
+<div class="chips">
+<span>Premiere Pro</span>
+<span>After Effects</span>
+<span>CapCut</span>
+<span>Canva</span>
+</div>
+</article>
+</div>
+<div class="subheading">
+<h3>Education</h3>
+<span>Learning with intention</span>
+</div>
+<div class="education-list">
+<article>
+<span class="timeline-dot">
+</span>
+<div>
+<h3>University of Kelaniya</h3>
+<p>Electronics &amp; Computer Science</p>
+</div>
+<span class="pill">Class of 2028 · Expected</span>
+</article>
+<article>
+<span class="timeline-dot">
+</span>
+<div>
+<h3>Dharmapala College, Pannipitiya</h3>
+<p>O/L: 9 A passes, 1 C pass &nbsp; · &nbsp; A/L: 3 B passes</p>
+</div>
+</article>
+</div>
+</section>
+<section id="experience" class="content-section " role="tabpanel" aria-labelledby="tab-experience" tabindex="0" hidden>
+<div class="section-heading">
+<span class="eyebrow">03 / Selected work</span>
+<h2>Built to be <em>used.</em>
+</h2>
+<p>Three full-stack projects. Explore the live experiences or dive into the code.</p>
+</div>
+<div class="projects-grid">
+<article class="project-card">
+<div class="project-art property" aria-hidden="true">
+<span class="art-brand">NEVERMORE</span>
+<div class="art-shape">
+</div>
+<strong>Spaces. Simplified.</strong>
+<span class="art-index">01</span>
+</div>
+<div class="project-body">
+<span class="eyebrow">Boarding & property management</span>
+<h3>NEVERMORE Boarding</h3>
+<p>A modern platform for boarding and property management.</p>
+<div class="project-links">
+<a class="primary-link" href="https://rentpay-web-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="NEVERMORE Boarding live demo">Live demo ↗</a>
+<div>
+<a href="https://github.com/BuddhikaSankalpa/rentpay-web-frontend" target="_blank" rel="noopener noreferrer" aria-label="NEVERMORE Boarding frontend source">Frontend ↗</a>
+<a href="https://github.com/BuddhikaSankalpa/rentpay-web-backend" target="_blank" rel="noopener noreferrer" aria-label="NEVERMORE Boarding backend source">Backend ↗</a>
+</div>
+</div>
+</div>
+</article>
+<article class="project-card">
+<div class="project-art commerce" aria-hidden="true">
+<span class="art-brand">I / COMPUTERS</span>
+<div class="art-shape">
+</div>
+<strong>Discover your next upgrade.</strong>
+<span class="art-index">02</span>
+</div>
+<div class="project-body">
+<span class="eyebrow">E-commerce platform</span>
+<h3>I-Computers</h3>
+<p>A full-stack e-commerce platform bringing the shopping experience online.</p>
+<div class="project-links">
+<a class="primary-link" href="https://i-computers-frontend-five.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="I-Computers live demo">Live demo ↗</a>
+<div>
+<a href="https://github.com/BuddhikaSankalpa/i-computers-frontend" target="_blank" rel="noopener noreferrer" aria-label="I-Computers frontend source">Frontend ↗</a>
+<a href="https://github.com/BuddhikaSankalpa/i-computers-backend" target="_blank" rel="noopener noreferrer" aria-label="I-Computers backend source">Backend ↗</a>
+</div>
+</div>
+</div>
+</article>
+<article class="project-card">
+<div class="project-art learning" aria-hidden="true">
+<span class="art-brand">LEARN / ONLINE</span>
+<div class="art-shape">
+</div>
+<strong>A space for your next idea.</strong>
+<span class="art-index">03</span>
+</div>
+<div class="project-body">
+<span class="eyebrow">Online learning</span>
+<h3>E-learning Platform</h3>
+<p>A full-stack e-learning platform built for digital education.</p>
+<div class="project-links">
+<a class="primary-link" href="https://e-learnign-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="E-learning Platform live demo">Live demo ↗</a>
+<div>
+<a href="https://github.com/BuddhikaSankalpa/E-learnign-Frontend" target="_blank" rel="noopener noreferrer" aria-label="E-learning Platform frontend source">Frontend ↗</a>
+<a href="https://github.com/BuddhikaSankalpa/E-learnign-backend" target="_blank" rel="noopener noreferrer" aria-label="E-learning Platform backend source">Backend ↗</a>
+</div>
+</div>
+</div>
+</article>
+</div>
+<div class="subheading">
+<h3>Leadership &amp; experience</h3>
+<span>Beyond the code</span>
+</div>
+<article class="card leadership">
+<span class="card-icon">↗</span>
+<div>
+<h3>Electronics and Computer Science Club</h3>
+<p>Public Relations Coordinator · Technical Coordinator</p>
+<p class="small-copy">Leadership, communication, and technical coordination through club activities.</p>
+</div>
+</article>
+</section>
+<section id="awards" class="content-section " role="tabpanel" aria-labelledby="tab-awards" tabindex="0" hidden>
+<div class="section-heading">
+<span class="eyebrow">04 / Continuous learning</span>
+<h2>Always <em>building knowledge.</em>
+</h2>
+<p>My certification focus areas and the activities that shape my learning.</p>
+</div>
+<div class="cert-grid">
+<article class="card cert-card">
+<span class="cert-number">01</span>
+<div>
+<span class="eyebrow">Learning area</span>
+<h3>Web Development</h3>
+</div>
+<span class="cert-star" aria-hidden="true">✧</span>
+</article>
+<article class="card cert-card">
+<span class="cert-number">02</span>
+<div>
+<span class="eyebrow">Learning area</span>
+<h3>Machine Learning</h3>
+</div>
+<span class="cert-star" aria-hidden="true">✧</span>
+</article>
+<article class="card cert-card">
+<span class="cert-number">03</span>
+<div>
+<span class="eyebrow">Learning area</span>
+<h3>Python</h3>
+</div>
+<span class="cert-star" aria-hidden="true">✧</span>
+</article>
+<article class="card cert-card">
+<span class="cert-number">04</span>
+<div>
+<span class="eyebrow">Learning area</span>
+<h3>Figma</h3>
+</div>
+<span class="cert-star" aria-hidden="true">✧</span>
+</article>
+<article class="card cert-card">
+<span class="cert-number">05</span>
+<div>
+<span class="eyebrow">Learning area</span>
+<h3>Cybersecurity</h3>
+</div>
+<span class="cert-star" aria-hidden="true">✧</span>
+</article>
+</div>
+<p class="section-note">Certificate titles, issuers, and credential links will be added when available.</p>
+<div class="subheading">
+<h3>Activities &amp; achievements</h3>
+<span>Learning by taking part</span>
+</div>
+<div class="activity-grid">
+<article class="card">
+<h3>Club activities</h3>
+<p>Contributing to the Electronics and Computer Science Club.</p>
+</article>
+<article class="card">
+<h3>Competitions</h3>
+<p>An area of interest for applying skills and exploring new challenges.</p>
+</article>
+<article class="card">
+<h3>Academic projects</h3>
+<p>Putting Electronics &amp; Computer Science learning into practice.</p>
+</article>
+</div>
+</section>
+<section id="contact" class="content-section " role="tabpanel" aria-labelledby="tab-contact" tabindex="0" hidden>
+<div class="section-heading">
+<span class="eyebrow">05 / Let's connect</span>
+<h2>Have an idea?<br>
+<em>Let's talk.</em>
+</h2>
+<p>Get in touch about a project, collaboration, or a shared interest in technology.</p>
+</div>
+<div class="contact-grid">
+<article class="card contact-card">
+<span class="eyebrow">Your next conversation starts here</span>
+<h3>W. A Buddhika Sankalpa</h3>
+<a class="contact-detail" href="mailto:buddhikasankalpa304@gmail.com">
+<span>Email ↗</span>buddhikasankalpa304@gmail.com</a>
+<a class="contact-detail" href="tel:+94717309230">
+<span>Phone ↗</span>071 730 9230</a>
+<a class="primary-link" href="https://wa.me/94717309230" target="_blank" rel="noopener noreferrer">Send Message on WhatsApp ↗</a>
+<p class="small-copy">Opens a WhatsApp conversation with me.</p>
+</article>
+<article class="card">
+<span class="eyebrow">Find me online</span>
+<div class="social-links">
+<a href="https://github.com/BuddhikaSankalpa" target="_blank" rel="noopener noreferrer">GitHub <span>Code &amp; projects ↗</span>
+</a>
+<a href="https://linkedin.com/in/buddhika-sankalpa-542a04311" target="_blank" rel="noopener noreferrer">LinkedIn <span>Let's connect ↗</span>
+</a>
+<a href="mailto:buddhikasankalpa304@gmail.com">Email <span>Say hello ↗</span>
+</a>
+<a href="https://wa.me/94717309230" target="_blank" rel="noopener noreferrer">WhatsApp <span>Send a message ↗</span>
+</a>
+</div>
+</article>
+</div>
+<div class="subheading">
+<h3>What we can build together</h3>
+<span>Services &amp; collaboration</span>
+</div>
+<div class="chips service-chips">
+<span>Web Development</span>
+<span>MERN Applications</span>
+<span>AI Solutions</span>
+<span>Embedded Systems</span>
+</div>
+</section>
+</div>
+<footer class="popup-footer">
+<span>© 2026 Buddhika Sankalpa</span>
+<span>Built with Three.js &amp; Vite <i>✦</i>
+</span>
+</footer>
+</div>
+</div>
+<div class="point point-0">
+<button class="label" aria-label="Open About">1</button>
+<div class="text">
+<strong>About</strong>
+<br>Explore my background and goals.</div>
+</div>
+<div class="point point-1">
+<button class="label" aria-label="Open Skills &amp; Education">2</button>
+<div class="text">
+<strong>Skills &amp; Education</strong>
+<br>Explore my toolkit and education.</div>
+</div>
+<div class="point point-2">
+<button class="label" aria-label="Open Projects &amp; Experience">3</button>
+<div class="text">
+<strong>Projects &amp; Experience</strong>
+<br>Explore my projects and leadership.</div>
+</div>
+<div class="point point-3">
+<button class="label" aria-label="Open Certifications">4</button>
+<div class="text">
+<strong>Certifications</strong>
+<br>Explore my learning and activities.</div>
+</div>
+<div class="point point-4">
+<button class="label" aria-label="Open Contact">5</button>
+<div class="text">
+<strong>Contact</strong>
+<br>Explore my contact details and services.</div>
+</div>
+<div class="scene-caption">A little world. A lot of possibilities.<span>Drag to explore · Select a number to discover more</span>
+</div>
+<canvas class="webgl" aria-label="Interactive floating island">
+</canvas>
+<script type="module" src="/src/main.js">
+</script>
+</body>
 </html>
