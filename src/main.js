@@ -85,29 +85,74 @@ gltfLoader.load(
 )
 
 /**
- * Yard companion. Placement uses the island's local coordinates so the dog
+ * Yard companion. Placement uses the island's local coordinates so the horse
  * stays attached to the yard during parallax and camera movement.
  */
-const dogPlacement = {
-    height: 0.13,
+const horsePlacement = {
+    height: 0.25,
     position: new THREE.Vector3(0.38, -0.152, 0.00),
     rotationY: Math.PI / 5
+}
+let horseMixer = null
+
+gltfLoader.load('/models/horse.glb', (gltf) => {
+    const horse = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'horse'
+    anchor.position.copy(horsePlacement.position)
+    anchor.rotation.y = horsePlacement.rotationY
+
+    horse.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            // Avoid self-shadow artifacts on the small animated fur mesh.
+            child.receiveShadow = false
+            // Animated limbs can move outside the original mesh bounds.
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+
+    const horseClip = gltf.animations.find(clip => /idle|standing/i.test(clip.name))
+        ?? gltf.animations[0]
+    if (horseClip) {
+        horseMixer = new THREE.AnimationMixer(horse)
+        horseMixer.clipAction(horseClip).play()
+        horseMixer.update(0)
+    }
+
+    // Normalize the authored model size, then align its hooves with the yard.
+    horse.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(horse)
+    const scale = horsePlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    horse.scale.multiplyScalar(scale)
+    horse.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    anchor.add(horse)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the yard horse:', error)
+})
+
+/** Sitting Shiba beside the man, facing the initial camera direction. */
+const dogPlacement = {
+    height: 0.085,
+    position: new THREE.Vector3(-0.070, -0.179, 0.230),
+    rotationY: Math.PI / 4
 }
 let dogMixer = null
 
 gltfLoader.load('/models/animated_dog_shiba_inu.glb', (gltf) => {
     const dog = gltf.scene
     const anchor = new THREE.Group()
-    anchor.name = 'Yard Shiba Inu'
+    anchor.name = 'Shiba beside the waving host'
     anchor.position.copy(dogPlacement.position)
     anchor.rotation.y = dogPlacement.rotationY
 
     dog.traverse((child) => {
         if (child.isMesh) {
             child.castShadow = true
-            // Avoid self-shadow artifacts on the small animated fur mesh.
             child.receiveShadow = false
-            // Animated limbs can move outside the original mesh bounds.
             child.frustumCulled = false
         }
         if (child.isLight || child.isCamera) child.visible = false
@@ -121,22 +166,65 @@ gltfLoader.load('/models/animated_dog_shiba_inu.glb', (gltf) => {
         dogMixer.update(0)
     }
 
-    // Normalize the authored model size, then align its paws with the yard.
     dog.updateMatrixWorld(true)
     const bounds = new THREE.Box3().setFromObject(dog)
     const scale = dogPlacement.height / bounds.getSize(new THREE.Vector3()).y
     const center = bounds.getCenter(new THREE.Vector3())
-    dog.scale.multiplyScalar(scale)
-    dog.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
-    anchor.add(dog)
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    fit.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    fit.add(dog)
+    anchor.add(fit)
     modelGroup.add(anchor)
 }, undefined, (error) => {
-    console.error('Could not load the yard Shiba Inu:', error)
+    console.error('Could not load the Shiba beside the host:', error)
+})
+
+/** Duck floating in the pond above the waterfall. */
+const duckPlacement = {
+    height: 0.065,
+    position: new THREE.Vector3(-0.48, -0.112, -0.20),
+    rotationY: Math.PI / 3
+}
+let duckMixer = null
+
+gltfLoader.load('/models/duck_animation.glb', (gltf) => {
+    const duck = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'Pond duck'
+    anchor.position.copy(duckPlacement.position)
+    anchor.rotation.y = duckPlacement.rotationY
+    duck.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            child.receiveShadow = false
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+    if (gltf.animations.length) {
+        duckMixer = new THREE.AnimationMixer(duck)
+        duckMixer.clipAction(gltf.animations[0]).play()
+        duckMixer.update(0)
+    }
+    duck.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(duck)
+    const scale = duckPlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    // The feet sit just below the water surface rather than on top of it.
+    fit.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    fit.add(duck)
+    anchor.add(fit)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the pond duck:', error)
 })
 
 /** Waving host on the open lawn to the left of the front steps. */
 const wavingPlacement = {
-    height: 0.24,
+    height: 0.19,
     position: new THREE.Vector3(-0.15, -0.1662, 0.30),
     rotationY: Math.PI / 4
 }
@@ -580,7 +668,9 @@ const clock = new THREE.Clock()
 const tick = () => {
     const deltaTime = clock.getDelta()
     const elapsedTime = clock.elapsedTime
+    if (horseMixer) horseMixer.update(Math.min(deltaTime, 0.05))
     if (dogMixer) dogMixer.update(Math.min(deltaTime, 0.05))
+    if (duckMixer) duckMixer.update(Math.min(deltaTime, 0.05))
     if (wavingMixer) wavingMixer.update(Math.min(deltaTime, 0.05))
     firefliesMaterial.uniforms.uTime.value = elapsedTime
 
