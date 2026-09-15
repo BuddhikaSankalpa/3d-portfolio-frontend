@@ -85,6 +85,122 @@ gltfLoader.load(
 )
 
 /**
+ * Yard companion. Placement uses the island's local coordinates so the dog
+ * stays attached to the yard during parallax and camera movement.
+ */
+const dogPlacement = {
+    height: 0.13,
+    position: new THREE.Vector3(0.38, -0.152, 0.00),
+    rotationY: Math.PI / 5
+}
+let dogMixer = null
+
+gltfLoader.load('/models/animated_dog_shiba_inu.glb', (gltf) => {
+    const dog = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'Yard Shiba Inu'
+    anchor.position.copy(dogPlacement.position)
+    anchor.rotation.y = dogPlacement.rotationY
+
+    dog.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            // Avoid self-shadow artifacts on the small animated fur mesh.
+            child.receiveShadow = false
+            // Animated limbs can move outside the original mesh bounds.
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+
+    const sittingClip = gltf.animations.find(clip => /sitting/i.test(clip.name))
+        ?? gltf.animations[0]
+    if (sittingClip) {
+        dogMixer = new THREE.AnimationMixer(dog)
+        dogMixer.clipAction(sittingClip).play()
+        dogMixer.update(0)
+    }
+
+    // Normalize the authored model size, then align its paws with the yard.
+    dog.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(dog)
+    const scale = dogPlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    dog.scale.multiplyScalar(scale)
+    dog.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    anchor.add(dog)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the yard Shiba Inu:', error)
+})
+
+/** Waving host on the open lawn to the left of the front steps. */
+const wavingPlacement = {
+    height: 0.24,
+    position: new THREE.Vector3(-0.15, -0.1662, 0.30),
+    rotationY: Math.PI / 4
+}
+let wavingMixer = null
+
+// Convert this asset's legacy specular/glossiness material to the supported
+// metallic/roughness workflow while retaining its embedded color texture.
+const wavingLoader = new GLTFLoader(loadingManager)
+wavingLoader.register(parser => ({
+    name: 'YardLegacyMaterialCompatibility',
+    beforeRoot() {
+        for (const material of parser.json.materials ?? []) {
+            const legacy = material.extensions?.KHR_materials_pbrSpecularGlossiness
+            if (!legacy || material.pbrMetallicRoughness) continue
+            material.pbrMetallicRoughness = {
+                baseColorFactor: legacy.diffuseFactor ?? [1, 1, 1, 1],
+                baseColorTexture: legacy.diffuseTexture,
+                metallicFactor: 0,
+                roughnessFactor: 1 - (legacy.glossinessFactor ?? 0)
+            }
+        }
+    }
+}))
+wavingLoader.load('/models/waving.glb', (gltf) => {
+    const character = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'Waving yard host'
+    anchor.position.copy(wavingPlacement.position)
+    anchor.rotation.y = wavingPlacement.rotationY
+
+    character.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            child.receiveShadow = false
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+
+    // This file contains one Mixamo waving clip.
+    const waveClip = gltf.animations.find(clip => /wav/i.test(clip.name))
+        ?? gltf.animations[0]
+    if (waveClip) {
+        wavingMixer = new THREE.AnimationMixer(character)
+        wavingMixer.clipAction(waveClip).play()
+        wavingMixer.update(0)
+    }
+
+    character.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(character)
+    const scale = wavingPlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    // Keep scaling and ground alignment outside the animated model hierarchy.
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    fit.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    fit.add(character)
+    anchor.add(fit)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the waving yard character:', error)
+})
+
+/**
  * Airplane Model Load කිරීම
  */
 let airplane = null; // Animation සඳහා variable එකක්
@@ -462,7 +578,10 @@ renderer.shadowMap.type = THREE.PCFShadowMap // Warning එක නැති ක�
 const clock = new THREE.Clock()
 
 const tick = () => {
-    const elapsedTime = clock.getElapsedTime()
+    const deltaTime = clock.getDelta()
+    const elapsedTime = clock.elapsedTime
+    if (dogMixer) dogMixer.update(Math.min(deltaTime, 0.05))
+    if (wavingMixer) wavingMixer.update(Math.min(deltaTime, 0.05))
     firefliesMaterial.uniforms.uTime.value = elapsedTime
 
     // Parallax Effect
