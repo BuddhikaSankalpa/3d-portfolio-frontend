@@ -265,6 +265,48 @@ gltfLoader.load('/models/butterflies.glb', (gltf) => {
     console.error('Could not load the garden butterflies:', error)
 })
 
+/** Cat perched on the upper rock ledge beside marker 4. */
+const catPlacement = {
+    height: 0.043,
+    position: new THREE.Vector3(0.12, 0.0439, -0.635),
+    rotationY: Math.PI / 4
+}
+let catMixer = null
+
+gltfLoader.load('/models/an_animated_cat.glb', (gltf) => {
+    const cat = gltf.scene
+    const anchor = new THREE.Group()
+    anchor.name = 'Cat on the rock ledge'
+    anchor.position.copy(catPlacement.position)
+    anchor.rotation.y = catPlacement.rotationY
+    cat.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true
+            child.receiveShadow = false
+            child.frustumCulled = false
+        }
+        if (child.isLight || child.isCamera) child.visible = false
+    })
+    const clip = gltf.animations.find(clip => /idle|sit/i.test(clip.name)) ?? gltf.animations[0]
+    if (clip) {
+        catMixer = new THREE.AnimationMixer(cat)
+        catMixer.clipAction(clip).play()
+        catMixer.update(0)
+    }
+    cat.updateMatrixWorld(true)
+    const bounds = new THREE.Box3().setFromObject(cat, true)
+    const scale = catPlacement.height / bounds.getSize(new THREE.Vector3()).y
+    const center = bounds.getCenter(new THREE.Vector3())
+    const fit = new THREE.Group()
+    fit.scale.setScalar(scale)
+    fit.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale)
+    fit.add(cat)
+    anchor.add(fit)
+    modelGroup.add(anchor)
+}, undefined, (error) => {
+    console.error('Could not load the cat on the rock ledge:', error)
+})
+
 /** Waving host on the open lawn to the left of the front steps. */
 const wavingPlacement = {
     height: 0.19,
@@ -757,6 +799,7 @@ const tick = () => {
     if (dogMixer) dogMixer.update(Math.min(deltaTime, 0.05))
     if (duckMixer) duckMixer.update(Math.min(deltaTime, 0.05))
     if (rabbitMixer) rabbitMixer.update(Math.min(deltaTime, 0.05))
+    if (catMixer) catMixer.update(Math.min(deltaTime, 0.05))
     if (butterflyMixer) butterflyMixer.update(Math.min(deltaTime, 0.05))
     if (butterflyFlight) {
         const flightTime = elapsedTime * 0.65
