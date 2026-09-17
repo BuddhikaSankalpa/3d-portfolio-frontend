@@ -887,23 +887,23 @@ const menuBtn = document.getElementById('menu-btn');
 const themeBtn = document.getElementById('theme-btn');
 const closeBtn = document.getElementById('close-btn');
 const popupOverlay = document.getElementById('info-popup');
-const tabButtons = document.querySelectorAll('.tab-btn');
+const topicTitle = document.getElementById('current-topic');
+const topicNames = { about: 'About', skills: 'Skills & Education', experience: 'Projects & Experience', awards: 'Certifications', contact: 'Contact' };
+let currentTopic = 'about';
 const contentSections = document.querySelectorAll('.content-section');
 
 let popupTrigger = menuBtn;
 const popupContainer = document.querySelector('.popup-container');
 const popupContent = document.querySelector('.popup-content');
 function selectTab(targetId, focus = false) {
-    tabButtons.forEach(button => {
-        const active = button.dataset.target === targetId;
-        button.classList.toggle('active', active);
-        button.setAttribute('aria-selected', String(active));
-        button.tabIndex = active ? 0 : -1;
-        if (active && focus) {
-            button.focus();
-            button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-        }
-    });
+    currentTopic = targetId;
+    topicTitle.textContent = topicNames[targetId];
+    if (focus) topicTitle.focus();
+    const point = points.find(point => point.targetTab === targetId);
+    gsap.to(controls.target, { x: point.position.x, y: point.position.y, z: point.position.z,
+        duration: 1.5, ease: 'power3.inOut', overwrite: true });
+    gsap.to(camera, { zoom: 3.5, duration: 1.5, ease: 'power3.inOut', overwrite: true,
+        onUpdate: () => camera.updateProjectionMatrix() });
     contentSections.forEach(section => {
         const active = section.id === targetId;
         section.classList.toggle('active', active);
@@ -911,7 +911,7 @@ function selectTab(targetId, focus = false) {
     });
     popupContent.scrollTop = 0;
 }
-function openPopup(targetId = document.querySelector('.tab-btn.active').dataset.target, trigger = menuBtn) {
+function openPopup(targetId = currentTopic, trigger = menuBtn) {
     popupTrigger = trigger;
     popupOverlay.classList.remove('hidden');
     popupOverlay.inert = false;
@@ -967,15 +967,15 @@ themeBtn.addEventListener('click', () => {
     }
 });
 
-// Accessible tab navigation.
-tabButtons.forEach((button, index) => {
-    button.addEventListener('click', () => selectTab(button.dataset.target));
-    button.addEventListener('keydown', event => {
-        let next;
-        if (event.key === 'ArrowRight') next = (index + 1) % tabButtons.length;
-        if (event.key === 'ArrowLeft') next = (index - 1 + tabButtons.length) % tabButtons.length;
-        if (event.key === 'Home') next = 0;
-        if (event.key === 'End') next = tabButtons.length - 1;
-        if (next !== undefined) { event.preventDefault(); selectTab(tabButtons[next].dataset.target, true); }
-    });
+function stepTopic(direction) {
+    const index = points.findIndex(point => point.targetTab === currentTopic);
+    selectTab(points[(index + direction + points.length) % points.length].targetTab);
+}
+document.getElementById('previous-topic').addEventListener('click', () => stepTopic(-1));
+document.getElementById('next-topic').addEventListener('click', () => stepTopic(1));
+document.querySelector('.topic-navigation').addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepTopic(event.key === 'ArrowRight' ? 1 : -1);
+    }
 });

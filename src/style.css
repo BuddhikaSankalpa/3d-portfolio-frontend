@@ -261,6 +261,10 @@ body.light-mode .scene-brand,body.light-mode .scene-caption { color:#23352e; }
 .close-btn { border:1px solid var(--line); background:transparent; color:var(--muted); width:34px; height:34px; border-radius:50%; font-size:25px; cursor:pointer; }
 .close-btn:hover { color:var(--ink); background:var(--card); }
 .popup-header { padding:0 30px; border-bottom:1px solid var(--line); flex-shrink:0; }
+.topic-navigation { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; }
+.topic-navigation h2 { margin:0; text-align:center; font-size:15px; font-weight:600; color:var(--accent); }
+.topic-arrow { display:grid; place-items:center; flex:0 0 36px; height:36px; border:1px solid var(--line); border-radius:50%; background:var(--card); color:var(--ink); font-size:26px; cursor:pointer; transition:background .2s,transform .2s; }
+.topic-arrow:hover { background:var(--line); transform:scale(1.06); }
 .tabs { display:flex; gap:25px; }
 .tab-btn { border:0; border-bottom:2px solid transparent; background:transparent; padding:20px 0 17px; color:var(--muted); font-size:12px; cursor:pointer; white-space:nowrap; }
 .tab-btn>span { font-size:10px; opacity:.5; margin-right:7px; }

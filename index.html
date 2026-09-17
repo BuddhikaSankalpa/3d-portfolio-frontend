@@ -32,21 +32,14 @@
 <button id="close-btn" class="close-btn" aria-label="Close portfolio">×</button>
 </div>
 <div class="popup-header">
-<div class="tabs" role="tablist" aria-label="Portfolio sections">
-<button id="tab-about" class="tab-btn active" data-target="about" role="tab" aria-controls="about" aria-selected="true" tabindex="0">
-<span>01</span>About</button>
-<button id="tab-skills" class="tab-btn " data-target="skills" role="tab" aria-controls="skills" aria-selected="false" tabindex="-1">
-<span>02</span>Skills & Education</button>
-<button id="tab-experience" class="tab-btn " data-target="experience" role="tab" aria-controls="experience" aria-selected="false" tabindex="-1">
-<span>03</span>Projects & Experience</button>
-<button id="tab-awards" class="tab-btn " data-target="awards" role="tab" aria-controls="awards" aria-selected="false" tabindex="-1">
-<span>04</span>Certifications</button>
-<button id="tab-contact" class="tab-btn " data-target="contact" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">
-<span>05</span>Contact</button>
+<div class="topic-navigation" aria-label="Portfolio sections">
+<button id="previous-topic" class="topic-arrow" aria-label="Previous topic">&#8249;</button>
+<h2 id="current-topic" tabindex="-1" aria-live="polite">About</h2>
+<button id="next-topic" class="topic-arrow" aria-label="Next topic">&#8250;</button>
 </div>
 </div>
 <div class="popup-content">
-<section id="about" class="content-section active" role="tabpanel" aria-labelledby="tab-about" tabindex="0" >
+<section id="about" class="content-section active" role="region" aria-labelledby="current-topic" tabindex="0" >
 <div class="section-heading">
 <span class="eyebrow">01 / A little about me</span>
 <h1>Curious mind.<br>
@@ -81,7 +74,7 @@
 </div>
 </div>
 </section>
-<section id="skills" class="content-section " role="tabpanel" aria-labelledby="tab-skills" tabindex="0" hidden>
+<section id="skills" class="content-section " role="region" aria-labelledby="current-topic" tabindex="0" hidden>
 <div class="section-heading">
 <span class="eyebrow">02 / My toolkit</span>
 <h2>Ideas into <em>implementation.</em>
@@ -164,7 +157,7 @@
 </article>
 </div>
 </section>
-<section id="experience" class="content-section " role="tabpanel" aria-labelledby="tab-experience" tabindex="0" hidden>
+<section id="experience" class="content-section " role="region" aria-labelledby="current-topic" tabindex="0" hidden>
 <div class="section-heading">
 <span class="eyebrow">03 / Selected work</span>
 <h2>Built to be <em>used.</em>
@@ -249,7 +242,7 @@
 </div>
 </article>
 </section>
-<section id="awards" class="content-section " role="tabpanel" aria-labelledby="tab-awards" tabindex="0" hidden>
+<section id="awards" class="content-section " role="region" aria-labelledby="current-topic" tabindex="0" hidden>
 <div class="section-heading">
 <span class="eyebrow">04 / Continuous learning</span>
 <h2>Always <em>building knowledge.</em>
@@ -318,7 +311,7 @@
 </article>
 </div>
 </section>
-<section id="contact" class="content-section " role="tabpanel" aria-labelledby="tab-contact" tabindex="0" hidden>
+<section id="contact" class="content-section " role="region" aria-labelledby="current-topic" tabindex="0" hidden>
 <div class="section-heading">
 <span class="eyebrow">05 / Let's connect</span>
 <h2>Have an idea?<br>
