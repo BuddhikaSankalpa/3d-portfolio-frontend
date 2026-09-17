@@ -233,9 +233,28 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible { outline:2px soli
 .scene-caption span { display:block; margin-top:8px; font-size:11px; opacity:.65; }
 body.light-mode .scene-brand,body.light-mode .scene-caption { color:#23352e; }
 .icon-btn { border-radius:50%; border-width:1px; }
-.popup-overlay { position:fixed; inset:0; z-index:200; background:#070d10aa; backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:28px; }
+.popup-overlay { position:fixed; inset:0; z-index:200; background:rgba(7,13,16,0.2); display:flex; align-items:center; justify-content:center; padding:28px; }
 .popup-overlay.hidden { display:none; }
 .popup-container { width:1100px; max-width:100%; height:min(820px,92dvh); display:flex; flex-direction:column; overflow:hidden; background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:24px; box-shadow:0 32px 100px #0008; animation:panel-in .25s ease; }
+/* Frosted glass stays scoped to the popup; solid theme colors also serve as a fallback. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .popup-container {
+        --card: rgba(34, 46, 44, 0.6);
+        --line: rgba(211, 235, 219, 0.18);
+        background: linear-gradient(135deg, rgba(255,255,255,0.07), transparent 50%), rgba(16, 25, 25, 0.76);
+        -webkit-backdrop-filter: blur(22px) saturate(135%);
+        backdrop-filter: blur(22px) saturate(135%);
+        border-color: rgba(226, 246, 232, 0.28);
+        box-shadow: 0 24px 70px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    body.light-mode .popup-container {
+        --card: rgba(255, 255, 255, 0.6);
+        --line: rgba(62, 87, 65, 0.18);
+        background: linear-gradient(135deg, rgba(255,255,255,0.35), transparent 50%), rgba(245, 246, 239, 0.78);
+        border-color: rgba(255,255,255,0.65);
+        box-shadow: 0 24px 70px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+}
 .popup-topline { display:flex; align-items:center; justify-content:space-between; padding:18px 30px; border-bottom:1px solid var(--line); flex-shrink:0; }
 .popup-topline>span { font-size:10px; letter-spacing:2px; color:var(--muted); display:flex; gap:16px; align-items:center; }
 .popup-topline b { font-size:25px; letter-spacing:-2px; color:var(--accent); }
