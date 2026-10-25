@@ -1,0 +1,1453 @@
+[
+  {
+    "file": "animated_dog_shiba_inu.glb",
+    "bytes": 10096888,
+    "textureBytes": 2070993,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 1553000,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Material_0"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 517993,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Material_0"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "shiba_inu.2_Material_0_0",
+        "bytes": 1479560,
+        "vertices": 19267
+      }
+    ],
+    "animations": [
+      "0|play_dead_0",
+      "0|rollover_0",
+      "0|shake_0",
+      "0|sitting_0",
+      "0|standing_0"
+    ]
+  },
+  {
+    "file": "an_animated_cat.glb",
+    "bytes": 3179384,
+    "textureBytes": 2174334,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 920820,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Material_81"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 920820,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Material_105"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 332694,
+        "width": 512,
+        "height": 512,
+        "materials": [
+          "Material_93"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Object_0",
+        "bytes": 292088,
+        "vertices": 3895
+      },
+      {
+        "name": "Object_2",
+        "bytes": 45504,
+        "vertices": 684
+      },
+      {
+        "name": "Object_1",
+        "bytes": 25328,
+        "vertices": 322
+      }
+    ],
+    "animations": [
+      "Take 001"
+    ]
+  },
+  {
+    "file": "a_rock.glb",
+    "bytes": 4518728,
+    "textureBytes": 4431113,
+    "images": [
+      {
+        "index": 2,
+        "bytes": 1927605,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "material_0"
+        ]
+      },
+      {
+        "index": 0,
+        "bytes": 1478077,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "material_0"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 1025431,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "material_0"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Object_0",
+        "bytes": 84624,
+        "vertices": 1229
+      }
+    ],
+    "animations": []
+  },
+  {
+    "file": "baloon_ship_2.glb",
+    "bytes": 9562484,
+    "textureBytes": 7917733,
+    "images": [
+      {
+        "index": 5,
+        "bytes": 1659974,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_baloon_flyship_001"
+        ]
+      },
+      {
+        "index": 6,
+        "bytes": 1497583,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_baloon_flyship_001"
+        ]
+      },
+      {
+        "index": 4,
+        "bytes": 1310780,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_baloon_flyship_001"
+        ]
+      },
+      {
+        "index": 0,
+        "bytes": 1251876,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_Fly_Ship2_01"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 1144139,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_Fly_Ship2_01"
+        ]
+      },
+      {
+        "index": 3,
+        "bytes": 1031862,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_Fly_Ship2_01"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 21519,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "map_Fly_Ship2_01"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Object_0",
+        "bytes": 1144560,
+        "vertices": 17079
+      },
+      {
+        "name": "Object_2",
+        "bytes": 462000,
+        "vertices": 7079
+      },
+      {
+        "name": "Object_1",
+        "bytes": 32400,
+        "vertices": 600
+      }
+    ],
+    "animations": []
+  },
+  {
+    "file": "butterflies.glb",
+    "bytes": 6370796,
+    "textureBytes": 3195368,
+    "images": [
+      {
+        "index": 2,
+        "bytes": 1610055,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "BFly_Blue"
+        ]
+      },
+      {
+        "index": 0,
+        "bytes": 1585091,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "BLy_Orange"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 222,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "BLy_Orange",
+          "BFly_Blue"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "0",
+        "bytes": 612000,
+        "vertices": 6120
+      },
+      {
+        "name": "3",
+        "bytes": 612000,
+        "vertices": 6120
+      },
+      {
+        "name": "2",
+        "bytes": 543600,
+        "vertices": 3624
+      },
+      {
+        "name": "5",
+        "bytes": 543600,
+        "vertices": 3624
+      },
+      {
+        "name": "1",
+        "bytes": 418800,
+        "vertices": 2792
+      },
+      {
+        "name": "4",
+        "bytes": 418800,
+        "vertices": 2792
+      }
+    ],
+    "animations": [
+      "Take 001"
+    ]
+  },
+  {
+    "file": "duck_animation.glb",
+    "bytes": 4436352,
+    "textureBytes": 2601593,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 1324850,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "material_0"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 1268502,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "material_0"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 8241,
+        "width": 64,
+        "height": 64,
+        "materials": [
+          "material_0"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Object_0",
+        "bytes": 1339172,
+        "vertices": 10648
+      }
+    ],
+    "animations": [
+      "Animation"
+    ]
+  },
+  {
+    "file": "horse.glb",
+    "bytes": 19792896,
+    "textureBytes": 8390871,
+    "images": [
+      {
+        "index": 1,
+        "bytes": 2124288,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Saddle"
+        ]
+      },
+      {
+        "index": 0,
+        "bytes": 1439687,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Saddle"
+        ]
+      },
+      {
+        "index": 7,
+        "bytes": 1223196,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Horse"
+        ]
+      },
+      {
+        "index": 6,
+        "bytes": 1162768,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Horse"
+        ]
+      },
+      {
+        "index": 5,
+        "bytes": 1146402,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Hair"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 493142,
+        "width": 512,
+        "height": 512,
+        "materials": [
+          "Horseshoe"
+        ]
+      },
+      {
+        "index": 3,
+        "bytes": 412003,
+        "width": 512,
+        "height": 512,
+        "materials": [
+          "Horseshoe"
+        ]
+      },
+      {
+        "index": 4,
+        "bytes": 389385,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Hair"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Stallion_Horse_0_Horse_0",
+        "bytes": 680640,
+        "vertices": 7353
+      },
+      {
+        "name": "Stallion_Hair_0_Hair_0",
+        "bytes": 456708,
+        "vertices": 5326
+      },
+      {
+        "name": "Saddle1_Saddle_0_Saddle_0",
+        "bytes": 395988,
+        "vertices": 4313
+      },
+      {
+        "name": "Bridle_Saddle_0_Saddle_0",
+        "bytes": 236712,
+        "vertices": 2691
+      },
+      {
+        "name": "Horseshoes_Horseshoe_0_Horseshoe_0",
+        "bytes": 75840,
+        "vertices": 896
+      },
+      {
+        "name": "Stallion_Cornea_0_Cornea_0",
+        "bytes": 17456,
+        "vertices": 226
+      }
+    ],
+    "animations": [
+      "Skeleton|1 Ilde",
+      "Skeleton|2 Ilde",
+      "Skeleton|3 Ilde",
+      "Skeleton|4 Attack_1",
+      "Skeleton|5 Attack_2",
+      "Skeleton|6 Eat",
+      "Skeleton|Arise",
+      "Skeleton|Buck_1",
+      "Skeleton|Buck_2",
+      "Skeleton|Buck_3",
+      "Skeleton|Death",
+      "Skeleton|Fallen",
+      "Skeleton|Falling",
+      "Skeleton|Gallop",
+      "Skeleton|Gallop_L",
+      "Skeleton|Gallop_R",
+      "Skeleton|Jump",
+      "Skeleton|Jump_Land",
+      "Skeleton|Jump_Run",
+      "Skeleton|Run_Stop",
+      "Skeleton|S.Jump",
+      "Skeleton|Sleep",
+      "Skeleton|Swim",
+      "Skeleton|Swim_L",
+      "Skeleton|Swim_R",
+      "Skeleton|Walk",
+      "Skeleton|Walk_L",
+      "Skeleton|Walk_R"
+    ]
+  },
+  {
+    "file": "rabbit_realistic.glb",
+    "bytes": 2728316,
+    "textureBytes": 1340383,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 1340383,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "M_Rabbit"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Rabbit.001_M_Rabbit_0",
+        "bytes": 438976,
+        "vertices": 5128
+      }
+    ],
+    "animations": [
+      "Rabbit|Rabbit_Idle",
+      "Rabbit|Rabbit_WalkSlow_F"
+    ]
+  },
+  {
+    "file": "stylized_3d_floating_island_and_mine_house.glb",
+    "bytes": 96561624,
+    "textureBytes": 48019260,
+    "images": [
+      {
+        "index": 54,
+        "bytes": 2350901,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Grass_Mat"
+        ]
+      },
+      {
+        "index": 61,
+        "bytes": 1935122,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Sack_Mat"
+        ]
+      },
+      {
+        "index": 45,
+        "bytes": 1448739,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Island_Mat"
+        ]
+      },
+      {
+        "index": 19,
+        "bytes": 1326379,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeLeaf_Mat"
+        ]
+      },
+      {
+        "index": 52,
+        "bytes": 1317252,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Grass_Mat"
+        ]
+      },
+      {
+        "index": 69,
+        "bytes": 1255843,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Water_Mat",
+          "Final_Water.001"
+        ]
+      },
+      {
+        "index": 17,
+        "bytes": 1154954,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeLeaf_Mat"
+        ]
+      },
+      {
+        "index": 65,
+        "bytes": 1142759,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_MineCart_Mat"
+        ]
+      },
+      {
+        "index": 43,
+        "bytes": 1055624,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Island_Mat"
+        ]
+      },
+      {
+        "index": 12,
+        "bytes": 1027957,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Bush_Mat"
+        ]
+      },
+      {
+        "index": 53,
+        "bytes": 1017821,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Grass_Mat"
+        ]
+      },
+      {
+        "index": 62,
+        "bytes": 1009057,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_MineCart_Mat"
+        ]
+      },
+      {
+        "index": 44,
+        "bytes": 1000175,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Island_Mat"
+        ]
+      },
+      {
+        "index": 71,
+        "bytes": 988661,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Final_Rocks2_Mat"
+        ]
+      },
+      {
+        "index": 8,
+        "bytes": 986422,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rocks_Mat"
+        ]
+      },
+      {
+        "index": 14,
+        "bytes": 980166,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeWood_Mat"
+        ]
+      },
+      {
+        "index": 59,
+        "bytes": 955520,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Sack_Mat"
+        ]
+      },
+      {
+        "index": 28,
+        "bytes": 918485,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Chimney_Mat"
+        ]
+      },
+      {
+        "index": 16,
+        "bytes": 908470,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeWood_Mat"
+        ]
+      },
+      {
+        "index": 31,
+        "bytes": 897419,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_CutRock_Mat"
+        ]
+      },
+      {
+        "index": 75,
+        "bytes": 886430,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Lillypad_Mat"
+        ]
+      },
+      {
+        "index": 6,
+        "bytes": 877821,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rocks_Mat"
+        ]
+      },
+      {
+        "index": 26,
+        "bytes": 862745,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Chimney_Mat"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 837746,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Bridge_Mat.001"
+        ]
+      },
+      {
+        "index": 46,
+        "bytes": 824231,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_LampGlass_Mat",
+          "SF_Lamp_Mat"
+        ]
+      },
+      {
+        "index": 74,
+        "bytes": 819590,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Lillypad_Mat"
+        ]
+      },
+      {
+        "index": 37,
+        "bytes": 808952,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_PlasterTex_Mat"
+        ]
+      },
+      {
+        "index": 70,
+        "bytes": 790343,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Final_Rocks2_Mat"
+        ]
+      },
+      {
+        "index": 49,
+        "bytes": 782173,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Lamp_Mat"
+        ]
+      },
+      {
+        "index": 29,
+        "bytes": 768298,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_CutRock_Mat"
+        ]
+      },
+      {
+        "index": 57,
+        "bytes": 762718,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rail_Mat"
+        ]
+      },
+      {
+        "index": 34,
+        "bytes": 752527,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Stalagmites_Mat"
+        ]
+      },
+      {
+        "index": 58,
+        "bytes": 729542,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_GrassCards_Mat"
+        ]
+      },
+      {
+        "index": 42,
+        "bytes": 727131,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_StoneBrick_Mat"
+        ]
+      },
+      {
+        "index": 55,
+        "bytes": 724262,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rail_Mat"
+        ]
+      },
+      {
+        "index": 68,
+        "bytes": 714006,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Door_Mat"
+        ]
+      },
+      {
+        "index": 32,
+        "bytes": 691888,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Stalagmites_Mat"
+        ]
+      },
+      {
+        "index": 11,
+        "bytes": 679390,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Windows_Mat"
+        ]
+      },
+      {
+        "index": 39,
+        "bytes": 670017,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_PlasterTex_Mat"
+        ]
+      },
+      {
+        "index": 5,
+        "bytes": 600562,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Roof_Final"
+        ]
+      },
+      {
+        "index": 0,
+        "bytes": 600110,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Bridge_Mat.001"
+        ]
+      },
+      {
+        "index": 22,
+        "bytes": 575525,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseSupport_Mat"
+        ]
+      },
+      {
+        "index": 66,
+        "bytes": 540035,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Door_Mat"
+        ]
+      },
+      {
+        "index": 3,
+        "bytes": 527280,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Roof_Final"
+        ]
+      },
+      {
+        "index": 9,
+        "bytes": 510679,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Windows_Mat"
+        ]
+      },
+      {
+        "index": 30,
+        "bytes": 427466,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_CutRock_Mat"
+        ]
+      },
+      {
+        "index": 33,
+        "bytes": 369092,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Stalagmites_Mat"
+        ]
+      },
+      {
+        "index": 7,
+        "bytes": 367423,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rocks_Mat",
+          "Final_Rocks2_Mat"
+        ]
+      },
+      {
+        "index": 48,
+        "bytes": 352346,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Lamp_Mat"
+        ]
+      },
+      {
+        "index": 20,
+        "bytes": 349130,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseSupport_Mat"
+        ]
+      },
+      {
+        "index": 47,
+        "bytes": 348952,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Lamp_Mat"
+        ]
+      },
+      {
+        "index": 35,
+        "bytes": 321413,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_WoodTex_Mat"
+        ]
+      },
+      {
+        "index": 40,
+        "bytes": 320842,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_StoneBrick_Mat"
+        ]
+      },
+      {
+        "index": 27,
+        "bytes": 303405,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Chimney_Mat"
+        ]
+      },
+      {
+        "index": 72,
+        "bytes": 291617,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_ButterFly_Mat"
+        ]
+      },
+      {
+        "index": 38,
+        "bytes": 286796,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_PlasterTex_Mat"
+        ]
+      },
+      {
+        "index": 4,
+        "bytes": 238758,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Roof_Final"
+        ]
+      },
+      {
+        "index": 73,
+        "bytes": 237744,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_ButterFly_Mat"
+        ]
+      },
+      {
+        "index": 18,
+        "bytes": 226676,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeLeaf_Mat"
+        ]
+      },
+      {
+        "index": 63,
+        "bytes": 210881,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_MineCart_Mat"
+        ]
+      },
+      {
+        "index": 36,
+        "bytes": 198922,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_WoodTex_Mat"
+        ]
+      },
+      {
+        "index": 25,
+        "bytes": 159095,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseJoins_Mat"
+        ]
+      },
+      {
+        "index": 13,
+        "bytes": 158012,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Bush_Mat"
+        ]
+      },
+      {
+        "index": 50,
+        "bytes": 154943,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Candle_Mat"
+        ]
+      },
+      {
+        "index": 67,
+        "bytes": 118345,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Door_Mat"
+        ]
+      },
+      {
+        "index": 51,
+        "bytes": 118157,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Candle_Mat"
+        ]
+      },
+      {
+        "index": 10,
+        "bytes": 114855,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Windows_Mat"
+        ]
+      },
+      {
+        "index": 23,
+        "bytes": 109001,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseJoins_Mat"
+        ]
+      },
+      {
+        "index": 15,
+        "bytes": 90201,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_TreeWood_Mat"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 86402,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Bridge_Mat.001"
+        ]
+      },
+      {
+        "index": 21,
+        "bytes": 80435,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseSupport_Mat"
+        ]
+      },
+      {
+        "index": 64,
+        "bytes": 67425,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_MineCart_Mat"
+        ]
+      },
+      {
+        "index": 24,
+        "bytes": 55750,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_HouseJoins_Mat"
+        ]
+      },
+      {
+        "index": 41,
+        "bytes": 52076,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_StoneBrick_Mat"
+        ]
+      },
+      {
+        "index": 56,
+        "bytes": 37293,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Rail_Mat"
+        ]
+      },
+      {
+        "index": 60,
+        "bytes": 24080,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "SF_Sack_Mat"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Final_Bridge1_SF_TreeWood_Mat_0",
+        "bytes": 4432980,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_Windows_Mat_0",
+        "bytes": 3734244,
+        "vertices": 65534
+      },
+      {
+        "name": "Final_Bridge1_SF_Roof_Final_0",
+        "bytes": 3688332,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_Windows_Mat_0",
+        "bytes": 3679392,
+        "vertices": 65534
+      },
+      {
+        "name": "Final_Bridge1_SF_Roof_Final_0",
+        "bytes": 3651432,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_Roof_Final_0",
+        "bytes": 3610920,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_TreeLeaf_Mat_0",
+        "bytes": 2842128,
+        "vertices": 52632
+      },
+      {
+        "name": "Final_Bridge1_SF_GrassCards_Mat_0",
+        "bytes": 2621364,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_GrassCards_Mat_0",
+        "bytes": 2621088,
+        "vertices": 65532
+      },
+      {
+        "name": "Final_Bridge1_SF_GrassCards_Mat_0",
+        "bytes": 2620076,
+        "vertices": 65533
+      },
+      {
+        "name": "Final_Bridge1_SF_HouseSupport_Mat_0",
+        "bytes": 2561760,
+        "vertices": 46052
+      },
+      {
+        "name": "Final_Bridge1_SF_GrassCards_Mat_0",
+        "bytes": 1762592,
+        "vertices": 44068
+      },
+      {
+        "name": "Final_Bridge1_SF_TreeWood_Mat_0",
+        "bytes": 1329540,
+        "vertices": 20971
+      },
+      {
+        "name": "Final_Bridge1_SF_Roof_Final_0",
+        "bytes": 1230780,
+        "vertices": 22107
+      },
+      {
+        "name": "Final_Bridge1_SF_Windows_Mat_0",
+        "bytes": 1069140,
+        "vertices": 18920
+      },
+      {
+        "name": "Final_Bridge1_SF_HouseJoins_Mat_0",
+        "bytes": 979044,
+        "vertices": 17311
+      },
+      {
+        "name": "Final_Bridge1_SF_Rail_Mat_0",
+        "bytes": 911472,
+        "vertices": 16471
+      },
+      {
+        "name": "Final_Bridge1_SF_MineCart_Mat_0",
+        "bytes": 901632,
+        "vertices": 15328
+      },
+      {
+        "name": "Final_Bridge1_SF_Lamp_Mat_0",
+        "bytes": 774936,
+        "vertices": 14194
+      },
+      {
+        "name": "Final_Bridge1_SF_Sack_Mat_0",
+        "bytes": 450624,
+        "vertices": 6644
+      },
+      {
+        "name": "Final_Bridge1_SF_Door_Mat_0",
+        "bytes": 415680,
+        "vertices": 7322
+      },
+      {
+        "name": "Final_Bridge1_SF_Stalagmites_Mat_0",
+        "bytes": 411912,
+        "vertices": 5980
+      },
+      {
+        "name": "Final_Bridge1_SF_Chimney_Mat_0",
+        "bytes": 331080,
+        "vertices": 4918
+      },
+      {
+        "name": "Final_Bridge1_SF_Bridge_Mat.001_0",
+        "bytes": 310464,
+        "vertices": 5436
+      },
+      {
+        "name": "Final_Bridge1_SF_Bush_Mat_0",
+        "bytes": 303088,
+        "vertices": 7904
+      },
+      {
+        "name": "Final_Bridge1_SF_Island_Mat_0",
+        "bytes": 266604,
+        "vertices": 3889
+      },
+      {
+        "name": "Final_Bridge1_SF_Grass_Mat_0",
+        "bytes": 240300,
+        "vertices": 3471
+      },
+      {
+        "name": "Final_Bridge1_SF_Rocks_Mat_0",
+        "bytes": 193872,
+        "vertices": 2817
+      },
+      {
+        "name": "Final_Bridge1_SF_CutRock_Mat_0",
+        "bytes": 166440,
+        "vertices": 2647
+      },
+      {
+        "name": "Final_Bridge1_Final_Rocks2_Mat_0",
+        "bytes": 77904,
+        "vertices": 1142
+      },
+      {
+        "name": "Final_Bridge1_SF_Lillypad_Mat_0",
+        "bytes": 69552,
+        "vertices": 1288
+      },
+      {
+        "name": "Final_Bridge1_SF_StoneBrick_Mat_0",
+        "bytes": 52368,
+        "vertices": 815
+      },
+      {
+        "name": "Final_Bridge1_SF_Candle_Mat_0",
+        "bytes": 47040,
+        "vertices": 921
+      },
+      {
+        "name": "Final_Bridge1_SF_WoodTex_Mat_0",
+        "bytes": 45492,
+        "vertices": 804
+      },
+      {
+        "name": "Final_Bridge1_SF_LampGlass_Mat_0",
+        "bytes": 29920,
+        "vertices": 740
+      },
+      {
+        "name": "Final_Bridge1_SF_PlasterTex_Mat_0",
+        "bytes": 23136,
+        "vertices": 389
+      },
+      {
+        "name": "Final_Bridge1_SF_Bridge_Mat_0",
+        "bytes": 10432,
+        "vertices": 260
+      },
+      {
+        "name": "Final_Bridge1_SF_ButterFly_Mat_0",
+        "bytes": 6080,
+        "vertices": 160
+      },
+      {
+        "name": "Final_Bridge1_SF_Water_Mat_0",
+        "bytes": 3060,
+        "vertices": 69
+      },
+      {
+        "name": "Final_Bridge1_Final_Water.001_0",
+        "bytes": 504,
+        "vertices": 12
+      },
+      {
+        "name": "Final_Bridge1_Black_0",
+        "bytes": 304,
+        "vertices": 8
+      }
+    ],
+    "animations": []
+  },
+  {
+    "file": "waving.glb",
+    "bytes": 3739640,
+    "textureBytes": 3298472,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 1720635,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Peasant_Man_02"
+        ]
+      },
+      {
+        "index": 2,
+        "bytes": 1111768,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Peasant_Man_02"
+        ]
+      },
+      {
+        "index": 1,
+        "bytes": 466069,
+        "width": 1024,
+        "height": 1024,
+        "materials": [
+          "Peasant_Man_02"
+        ]
+      }
+    ],
+    "meshes": [
+      {
+        "name": "Peasant_Man_Peasant_Man_02_0",
+        "bytes": 305948,
+        "vertices": 2846
+      }
+    ],
+    "animations": [
+      "mixamo.com"
+    ]
+  }
+]

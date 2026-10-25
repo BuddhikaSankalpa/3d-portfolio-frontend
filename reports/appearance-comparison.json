@@ -1,0 +1,14 @@
+[
+  {
+    "view": "front",
+    "rmse": 0.7933113195929066,
+    "psnrDB": 50.14193058493302,
+    "channelsDifferingByMoreThan10Percent": 0.08806584362139917
+  },
+  {
+    "view": "back",
+    "rmse": 0.668699254834068,
+    "psnrDB": 51.62618682380874,
+    "channelsDifferingByMoreThan10Percent": 0.0591820987654321
+  }
+]

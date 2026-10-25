@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
+import { createDeferredModels } from './deferred-models.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import firefliesVertexShader from './shaders/fireflies/vertex.glsl?raw'
@@ -15,14 +17,12 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Loading Manager (ඔක්කොම load වෙනකන් canvas එක hide කරලා තියලා, ඉවර උනාට පස්සෙ fade-in කිරීමට)
+ * Primary resources. Island visibility does not wait for decorative models.
  */
-const loadingManager = new THREE.LoadingManager(
-    () => {
-        // Model, texture, font ඔක්කොම load වුනාට පස්සෙ canvas එක fade-in කිරීම
-        canvas.classList.add('loaded')
-    }
-)
+const loadingManager = new THREE.LoadingManager()
+const deferredModels = createDeferredModels(2)
+let islandLoaded = false
+let islandRevealed = false
 
 /**
  * Lights (ආලෝකය)
@@ -47,7 +47,7 @@ let sceneReady = false; // Points හැංගීමට
 /**
  * Model Load කිරීම
  */
-const gltfLoader = new GLTFLoader(loadingManager)
+const gltfLoader = new GLTFLoader(loadingManager).setMeshoptDecoder(MeshoptDecoder)
 const modelGroup = new THREE.Group()
 scene.add(modelGroup)
 
@@ -58,7 +58,7 @@ scene.add(modelGroup)
 const HIDDEN_MESH_KEYWORDS = ['Bridge_Mat', 'Rail_Mat']
 
 gltfLoader.load(
-    '/models/stylized_3d_floating_island_and_mine_house.glb', 
+    '/models/optimized/stylized_3d_floating_island_and_mine_house.glb',
     (gltf) => {
         const room = gltf.scene
         room.position.set(0, -0.15, 0) 
@@ -84,6 +84,7 @@ gltfLoader.load(
         })
         
         modelGroup.add(room)
+        islandLoaded = true
         setTimeout(() => { sceneReady = true }, 1000)
     }
 )
@@ -99,7 +100,7 @@ const horsePlacement = {
 }
 let horseMixer = null
 
-gltfLoader.load('/models/horse.glb', (gltf) => {
+deferredModels.load(gltfLoader, '/models/optimized/horse.glb', (gltf) => {
     const horse = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'horse'
@@ -146,7 +147,7 @@ const dogPlacement = {
 }
 let dogMixer = null
 
-gltfLoader.load('/models/animated_dog_shiba_inu.glb', (gltf) => {
+deferredModels.load(gltfLoader, '/models/optimized/animated_dog_shiba_inu.glb', (gltf) => {
     const dog = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'Shiba beside the waving host'
@@ -192,7 +193,7 @@ const duckPlacement = {
 }
 let duckMixer = null
 
-gltfLoader.load('/models/duck_animation.glb', (gltf) => {
+deferredModels.load(gltfLoader, '/models/optimized/duck_animation.glb', (gltf) => {
     const duck = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'Pond duck'
@@ -235,7 +236,7 @@ const butterflyPlacement = {
 let butterflyMixer = null
 let butterflyFlight = null
 
-gltfLoader.load('/models/butterflies.glb', (gltf) => {
+deferredModels.load(gltfLoader, '/models/optimized/butterflies.glb', (gltf) => {
     const butterflies = gltf.scene
     butterflyFlight = new THREE.Group()
     butterflyFlight.name = 'Butterflies above the garden'
@@ -277,7 +278,7 @@ const catPlacement = {
 }
 let catMixer = null
 
-gltfLoader.load('/models/an_animated_cat.glb', (gltf) => {
+deferredModels.load(gltfLoader, '/models/optimized/an_animated_cat.glb', (gltf) => {
     const cat = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'Cat on the rock ledge'
@@ -321,13 +322,14 @@ let wavingMixer = null
 
 // Convert this asset's legacy specular/glossiness material to the supported
 // metallic/roughness workflow while retaining its embedded color texture.
-const wavingLoader = new GLTFLoader(loadingManager)
+const wavingLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 wavingLoader.register(parser => ({
     name: 'YardLegacyMaterialCompatibility',
     beforeRoot() {
         for (const material of parser.json.materials ?? []) {
             const legacy = material.extensions?.KHR_materials_pbrSpecularGlossiness
-            if (!legacy || material.pbrMetallicRoughness) continue
+            // Serializers may add an empty PBR object to a legacy material.
+            if (!legacy || Object.keys(material.pbrMetallicRoughness ?? {}).length) continue
             material.pbrMetallicRoughness = {
                 baseColorFactor: legacy.diffuseFactor ?? [1, 1, 1, 1],
                 baseColorTexture: legacy.diffuseTexture,
@@ -345,7 +347,7 @@ const rabbitPlacement = {
 }
 let rabbitMixer = null
 
-wavingLoader.load('/models/rabbit_realistic.glb', (gltf) => {
+deferredModels.load(wavingLoader, '/models/optimized/rabbit_realistic.glb', (gltf) => {
     const rabbit = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'Rabbit on the grassy ledge'
@@ -379,7 +381,7 @@ wavingLoader.load('/models/rabbit_realistic.glb', (gltf) => {
     console.error('Could not load the rabbit on the ledge:', error)
 })
 
-wavingLoader.load('/models/waving.glb', (gltf) => {
+deferredModels.load(wavingLoader, '/models/optimized/waving.glb', (gltf) => {
     const character = gltf.scene
     const anchor = new THREE.Group()
     anchor.name = 'Waving yard host'
@@ -424,8 +426,8 @@ wavingLoader.load('/models/waving.glb', (gltf) => {
  */
 let airplane = null; // Animation සඳහා variable එකක්
 
-gltfLoader.load(
-    '/models/baloon_ship_2.glb', // ඔයාගේ ෆයිල් එකේ නම මෙතනට දෙන්න
+deferredModels.load(gltfLoader,
+    '/models/optimized/baloon_ship_2.glb', // ඔයාගේ ෆයිල් එකේ නම මෙතනට දෙන්න
     (gltf) => {
         airplane = gltf.scene;
         
@@ -463,8 +465,8 @@ let rock5 = null;
 // පුළුවන් වෙන්න array එකකට දාගන්නවා (කලින් potionIsland එකට විතරයි animation තිබුණේ)
 const floatingRocks = []
 
-gltfLoader.load(
-    '/models/a_rock.glb', // ඔයාගේ අලුත් ෆයිල් එකේ නම
+deferredModels.load(gltfLoader,
+    '/models/optimized/a_rock.glb', // ඔයාගේ අලුත් ෆයිල් එකේ නම
     (gltf) => {
         potionIsland = gltf.scene;
         
@@ -842,6 +844,13 @@ const tick = () => {
 
     hero.updateOverlay(camera)
     renderer.render(scene, camera)
+    if (islandLoaded && !islandRevealed) {
+        islandRevealed = true
+        canvas.classList.add('loaded')
+        performance.mark('island-visible')
+        // Let the browser paint the island before secondary downloads begin.
+        requestAnimationFrame(() => setTimeout(() => deferredModels.start(), 800))
+    }
     window.requestAnimationFrame(tick)
 }
 

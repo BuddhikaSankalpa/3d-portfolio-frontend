@@ -1,0 +1,69 @@
+{
+  "timing": {
+    "visible": 5309.900000095367,
+    "models": [
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/stylized_3d_floating_island_and_mine_house.glb",
+        "start": 455.10000002384186,
+        "bytes": 25185672
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/horse.glb",
+        "start": 6118.600000023842,
+        "bytes": 6650252
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/animated_dog_shiba_inu.glb",
+        "start": 6118.800000071526,
+        "bytes": 3365056
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/duck_animation.glb",
+        "start": 6371.700000047684,
+        "bytes": 1060808
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/butterflies.glb",
+        "start": 6879.300000071526,
+        "bytes": 1503028
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/an_animated_cat.glb",
+        "start": 7371.600000023842,
+        "bytes": 779200
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/rabbit_realistic.glb",
+        "start": 7388.300000071526,
+        "bytes": 907272
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/waving.glb",
+        "start": 8073.200000047684,
+        "bytes": 1024664
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/baloon_ship_2.glb",
+        "start": 8092.400000095367,
+        "bytes": 2107096
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/optimized/a_rock.glb",
+        "start": 8438.300000071526,
+        "bytes": 1110860
+      }
+    ]
+  },
+  "errors": [],
+  "passed": [
+    "all ten models decoded",
+    "secondary requests after island render",
+    "seven animation mixers advance",
+    "five markers visible",
+    "orbit drag",
+    "marker popup",
+    "Escape restores controls",
+    "theme",
+    "menu"
+  ]
+}

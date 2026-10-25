@@ -1,0 +1,82 @@
+[
+  {
+    "file": "animated_dog_shiba_inu.glb",
+    "before": 10096888,
+    "after": 3365056,
+    "reductionPercent": 66.67,
+    "animations": 5,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "an_animated_cat.glb",
+    "before": 3179384,
+    "after": 779200,
+    "reductionPercent": 75.49,
+    "animations": 1,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "a_rock.glb",
+    "before": 4518728,
+    "after": 1110860,
+    "reductionPercent": 75.42,
+    "animations": 0,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "baloon_ship_2.glb",
+    "before": 9562484,
+    "after": 2107096,
+    "reductionPercent": 77.96,
+    "animations": 0,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "butterflies.glb",
+    "before": 6370796,
+    "after": 1503028,
+    "reductionPercent": 76.41,
+    "animations": 1,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "duck_animation.glb",
+    "before": 4436352,
+    "after": 1060808,
+    "reductionPercent": 76.09,
+    "animations": 1,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "horse.glb",
+    "before": 19792896,
+    "after": 6650252,
+    "reductionPercent": 66.4,
+    "animations": 28,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "rabbit_realistic.glb",
+    "before": 2728316,
+    "after": 907272,
+    "reductionPercent": 66.75,
+    "animations": 2,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "stylized_3d_floating_island_and_mine_house.glb",
+    "before": 96561624,
+    "after": 25185672,
+    "reductionPercent": 73.92,
+    "animations": 0,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  },
+  {
+    "file": "waving.glb",
+    "before": 3739640,
+    "after": 1024664,
+    "reductionPercent": 72.6,
+    "animations": 1,
+    "verified": "Full texture resolution; exact compressed quantized geometry; animation values, node and mesh counts retained"
+  }
+]
