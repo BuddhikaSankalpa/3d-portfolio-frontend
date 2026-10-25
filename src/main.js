@@ -6,6 +6,7 @@ import firefliesVertexShader from './shaders/fireflies/vertex.glsl?raw'
 import firefliesFragmentShader from './shaders/fireflies/fragment.glsl?raw'
 
 import { createHero } from './hero.js'
+import { createOrbitCursor } from './orbit-cursor.js'
 
 import gsap from 'gsap'
 
@@ -727,6 +728,8 @@ controls.enableZoom = true
 controls.target.set(0, 0, 0)
 controls.minZoom = 0.8 
 controls.maxZoom = 5.0 // <--- මේ අගය 3.0 සිට 5.0 ට වෙනස් කරන්න
+const orbitCursor = createOrbitCursor(canvas, controls)
+if (import.meta.hot) import.meta.hot.dispose(() => orbitCursor.dispose())
 // controls.minAzimuthAngle = 0; 
 // controls.maxAzimuthAngle = Math.PI / 2;
 

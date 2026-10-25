@@ -391,7 +391,12 @@ body.light-mode { --panel:#f0f7ff; --card:#fff; --ink:#172f4c; --muted:#46627f; 
 .point:focus-within .text { opacity:1; }
 .portfolio-open .hero-accessible,.portfolio-open .point,.portfolio-open .scene-socials { visibility:hidden; }
 .portfolio-open .hero-details { visibility:hidden!important; }
-.popup-container { --card:rgba(14,35,57,.78); --line:rgba(102,199,255,.2); background:rgba(6,19,35,.8); border-color:#66c7ff50; }
+.popup-container { 
+    --card:rgba(14,35,57,.78); 
+    --line:rgba(102,199,255,.2); 
+    background:rgba(6,19,35,.2); /* Dark theme popup --------------------------------------------------------------------------------------------------------------------*/
+    border-color:#66c7ff50; 
+}
 .profile-card { background:radial-gradient(ellipse at 100% 0%,#168bff18,transparent 70%),var(--card); }
 .primary-link { color:#06172c; }
 body.light-mode .hero-roles,body.light-mode .scene-socials { color:#183c61; }

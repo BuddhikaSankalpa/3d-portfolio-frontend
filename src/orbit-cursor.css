@@ -1,0 +1,68 @@
+.orbit-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    z-index: 2147483647;
+    pointer-events: none;
+    visibility: hidden;
+    --orbit-blue: #168bff;
+    --orbit-highlight: #c8f5ff;
+}
+.orbit-cursor *, .orbit-cursor { pointer-events: none; }
+.orbit-cursor.is-visible { visibility: visible; }
+.orbit-cursor-ring {
+    position: absolute;
+    left: -14px;
+    top: -14px;
+    width: 28px;
+    height: 28px;
+    color: var(--orbit-blue);
+    filter: drop-shadow(0 0 3px #168bff80);
+    transition: width 150ms ease, height 150ms ease, left 150ms ease, top 150ms ease, filter 150ms ease;
+}
+.orbit-cursor-ring svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.orbit-cursor-ring circle { stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.orbit-cursor-arc { stroke: var(--orbit-highlight); stroke-width: 1.5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.orbit-cursor-dot {
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #e3f8ff;
+    box-shadow: 0 0 2px 1px #168bff, 0 0 5px #168bff80;
+}
+.orbit-cursor-icons {
+    position: absolute;
+    left: -14px;
+    top: -14px;
+    width: 28px;
+    height: 28px;
+    stroke: var(--orbit-highlight);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 2px #168bff);
+}
+.orbit-cursor-icons path { opacity: 0; transition: opacity 120ms ease; }
+.orbit-cursor[data-state="interactive"] .orbit-cursor-ring {
+    width: 36px; height: 36px; left: -18px; top: -18px;
+    filter: drop-shadow(0 0 5px #168bffcc);
+}
+.orbit-cursor[data-state="ready"] .orbit-cursor-ready,
+.orbit-cursor[data-state="dragging"] .orbit-cursor-drag { opacity: 1; }
+.orbit-cursor[data-state="dragging"] .orbit-cursor-ring {
+    width: 24px; height: 24px; left: -12px; top: -12px;
+}
+body.light-mode .orbit-cursor { --orbit-blue: #0069d6; --orbit-highlight: #005ebd; }
+@media (any-hover: hover) and (any-pointer: fine) {
+    html.orbit-cursor-active, html.orbit-cursor-active * { cursor: none !important; }
+    html.orbit-cursor-active :is(input, textarea, [contenteditable]:not([contenteditable="false"])),
+    html.orbit-cursor-active [contenteditable]:not([contenteditable="false"]) * { cursor: text !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .orbit-cursor-ring, .orbit-cursor-icons path { transition: none; }
+}
