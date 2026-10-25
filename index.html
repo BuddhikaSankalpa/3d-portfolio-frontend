@@ -9,13 +9,13 @@
 </head>
 <body>
 <div class="scene-brand">
-<span class="brand-mark">BS.</span>
+<span class="brand-mark">BS<span>.</span></span>
 <span>BUDDHIKA SANKALPA<small>Electronics &amp; Computer Science</small>
 </span>
 </div>
 <div class="ui-buttons">
 <button id="theme-btn" class="icon-btn" aria-label="Toggle light theme" aria-pressed="false">◐</button>
-<button id="menu-btn" class="icon-btn hamburger" aria-label="Open portfolio" aria-haspopup="dialog">
+<button id="menu-btn" class="icon-btn hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="portfolio-menu">
 <span>
 </span>
 <span>
@@ -23,7 +23,27 @@
 <span>
 </span>
 </button>
+<nav id="portfolio-menu" class="portfolio-menu" aria-label="Portfolio navigation" hidden>
+<span class="menu-eyebrow">EXPLORE MY WORLD</span>
+<button data-section="about"><span>01</span>About<span>↗</span></button>
+<button data-section="skills"><span>02</span>Skills<span>↗</span></button>
+<button data-section="experience"><span>03</span>Projects<span>↗</span></button>
+<button data-section="awards"><span>04</span>Certifications<span>↗</span></button>
+<button data-section="contact"><span>05</span>Contact<span>↗</span></button>
+</nav>
 </div>
+<main class="hero-accessible" aria-label="Introduction">
+<h1 id="hero-name" class="sr-only">Buddhika Sankalpa</h1>
+<p class="sr-only">Welcome to my world</p>
+<div class="hero-details">
+<p class="hero-roles">Developer <span>•</span> Creator <span>•</span> Explorer</p>
+<p class="hero-description">Building thoughtful digital experiences.</p>
+<div class="hero-actions">
+<button class="hero-primary" data-section="experience">Explore my work <span aria-hidden="true">→</span></button>
+<button class="hero-secondary" data-section="contact">Get in touch</button>
+</div>
+</div>
+</main>
 <div id="info-popup" class="popup-overlay hidden" inert>
 <div class="popup-container" role="dialog" aria-modal="true" aria-label="Buddhika Sankalpa portfolio">
 <div class="popup-topline">
@@ -393,8 +413,9 @@
 <strong>Contact</strong>
 <br>Explore my contact details and services.</div>
 </div>
-<div class="scene-caption">A little world. A lot of possibilities.<span>Drag to explore · Select a number to discover more</span>
+<div class="scene-caption">Drag to rotate <b>•</b> 360° view<span>Select a number to discover more</span>
 </div>
+<div class="scene-socials"><a href="https://github.com/BuddhikaSankalpa" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span></span><a href="https://linkedin.com/in/buddhika-sankalpa-542a04311" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
 <canvas class="webgl" aria-label="Interactive floating island">
 </canvas>
 <script type="module" src="/src/main.js">

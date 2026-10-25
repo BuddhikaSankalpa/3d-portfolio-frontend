@@ -5,8 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import firefliesVertexShader from './shaders/fireflies/vertex.glsl?raw'
 import firefliesFragmentShader from './shaders/fireflies/fragment.glsl?raw'
 
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import { createHero } from './hero.js'
 
 import gsap from 'gsap'
 
@@ -37,6 +36,11 @@ directionalLight.shadow.mapSize.width = 1024
 directionalLight.shadow.mapSize.height = 1024
 scene.add(directionalLight)
 
+// A restrained cool rim brings out the island silhouette without recoloring textures.
+const rimLight = new THREE.DirectionalLight(0x66c7ff, 0.65)
+rimLight.position.set(-3, 2, -4)
+scene.add(rimLight)
+
 let sceneReady = false; // Points හැංගීමට
 
 /**
@@ -60,7 +64,6 @@ gltfLoader.load(
         
         room.traverse((child) => {
             if (child.isMesh) {
-                console.log('Mesh name:', child.name, '| Material:', child.material.name)
 
                 // 👇 FIX: Bridge/Rail mesh එක නම, render කරන්නම එපා
                 const isUnwantedMesh = HIDDEN_MESH_KEYWORDS.some((keyword) =>
@@ -555,63 +558,13 @@ gltfLoader.load(
         // Model Group එකට එකතු කිරීම
         modelGroup.add(rock5);
         floatingRocks.push({ mesh: rock5, baseY: -1.2, speed: 1.1, amp: 0.045 }) // 👈 FIX: array එකට එකතු කිරීම
+        // Keep all five satellites, with less visual weight around the hero lettering.
+        floatingRocks.forEach(rock => rock.mesh.scale.multiplyScalar(0.68))
+        floatingRocks[0].baseY = -0.75
     }
 );
 
-/**
- * 3D Text (ඔයාගේ නම) එකතු කිරීම
- */
-// const textureLoader = new THREE.TextureLoader(loadingManager)
-// const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
-// matcapTexture.colorSpace = THREE.SRGBColorSpace 
-
-// const fontLoader = new FontLoader(loadingManager)
-
-// // 👇 මෙතන Path එක ඔයාගේ ෆෝල්ඩරයට ගැලපෙන විදිහට '/fonts/...' ලෙස වෙනස් කර ඇත
-// fontLoader.load(
-//     '/fonts/helvetiker_regular.typeface.json',
-//     (font) => {
-//         const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
-
-//         const textGeometry = new TextGeometry(
-//             'BUDDHIKA SANKALPA',
-//             {
-//                 font: font,
-//                 size: 0.4,
-//                 height: 0.08,
-//                 curveSegments: 12,
-//                 bevelEnabled: true,
-//                 bevelThickness: 0.03,
-//                 bevelSize: 0.02,
-//                 bevelOffset: 0,
-//                 bevelSegments: 5
-//             }
-//         )
-        
-//         textGeometry.center()
-//         textGeometry.computeVertexNormals()
-
-//         const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-
-//         // Scale එක සහ Position එක ගෙදරට උඩින් පිහිටුවීම
-//         textMesh.scale.set(0.15, 0.15, 0.15)
-//         textMesh.position.set(0, 1.3, -0.3) 
-
-//         // කැමරාවට මුහුණලා පේන්න හැරවීම
-//         textMesh.rotation.y = Math.PI / 4 
-//         textMesh.rotation.x = -Math.PI / 10 
-        
-//         textMesh.castShadow = true
-
-//         modelGroup.add(textMesh)
-//     },
-//     undefined,
-//     (error) => {
-//         console.error('Font load වීමේ දෝෂයක්:', error)
-//     }
-// )
-
-
+const hero = createHero(modelGroup, loadingManager)
 
 /**
  * Points of Interest (Hotspots)
@@ -650,7 +603,9 @@ const points = [
 // Point එකක් ක්ලික් කළ විට Zoom වීම සහ Popup එක විවෘත වීම
 points.forEach((point) => {
     point.element.querySelector('.label').addEventListener('click', () => {
-        const targetPos = point.position;
+        const targetPos = modelGroup.localToWorld(point.position.clone());
+        gsap.killTweensOf(camera);
+        gsap.killTweensOf(controls.target);
         
         // 1. Controls වල Target එක අදාල Point එක දෙසට හැරවීම (Pan වීම)
         gsap.to(controls.target, {
@@ -729,25 +684,36 @@ scene.add(fireflies)
  */
 const sizes = { width: window.innerWidth, height: window.innerHeight }
 
-const frustumSize = 1.65 // Model එකේ සයිස් එක අනුව මේක අඩු/වැඩි කරන්න
+const frustumSize = 1.95 // Model එකේ සයිස් එක අනුව මේක අඩු/වැඩි කරන්න
 const aspect = sizes.width / sizes.height
 const camera = new THREE.OrthographicCamera(
     frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 1, 1000
 )
 camera.position.set(5, 5, 5)
 scene.add(camera)
+function updateFraming() {
+    const frame = hero.layout(sizes.width, sizes.height)
+    const width = frame.right - frame.left
+    const height = frame.top - frame.bottom
+    camera.left = -width / 2
+    camera.right = width / 2
+    camera.top = height / 2
+    camera.bottom = -height / 2
+    // View offsets scale with zoom, keeping the orbit target in frame during
+    // wheel gestures and the existing hotspot zoom transitions.
+    camera.setViewOffset(sizes.width, sizes.height,
+        (frame.left + width / 2) / width * sizes.width,
+        -(frame.top - height / 2) / height * sizes.height,
+        sizes.width, sizes.height)
+}
+updateFraming()
 
 window.addEventListener('resize', () => {
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
-    camera.aspect = sizes.width / sizes.height
-    
-    camera.left = frustumSize * camera.aspect / -2
-    camera.right = frustumSize * camera.aspect / 2
-    camera.top = frustumSize / 2
-    camera.bottom = frustumSize / -2
-    camera.updateProjectionMatrix()
-    
+    updateFraming()
+    firefliesMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2)
+
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
@@ -871,6 +837,7 @@ const tick = () => {
     }
     // ----------------------------------------------
 
+    hero.updateOverlay(camera)
     renderer.render(scene, camera)
     window.requestAnimationFrame(tick)
 }
@@ -900,7 +867,8 @@ function selectTab(targetId, focus = false) {
     topicTitle.textContent = topicNames[targetId];
     if (focus) topicTitle.focus();
     const point = points.find(point => point.targetTab === targetId);
-    gsap.to(controls.target, { x: point.position.x, y: point.position.y, z: point.position.z,
+    const target = modelGroup.localToWorld(point.position.clone());
+    gsap.to(controls.target, { x: target.x, y: target.y, z: target.z,
         duration: 1.5, ease: 'power3.inOut', overwrite: true });
     gsap.to(camera, { zoom: 3.5, duration: 1.5, ease: 'power3.inOut', overwrite: true,
         onUpdate: () => camera.updateProjectionMatrix() });
@@ -912,25 +880,75 @@ function selectTab(targetId, focus = false) {
     popupContent.scrollTop = 0;
 }
 function openPopup(targetId = currentTopic, trigger = menuBtn) {
-    popupTrigger = trigger;
+    popupTrigger = menu.contains(trigger) ? menuBtn : trigger;
+    closeMenu();
+    document.body.classList.add('portfolio-open');
     popupOverlay.classList.remove('hidden');
     popupOverlay.inert = false;
     controls.enabled = false;
+    setSceneInert(true);
     selectTab(targetId, true);
 }
 function closePopup() {
     popupOverlay.classList.add('hidden');
+    document.body.classList.remove('portfolio-open');
     popupOverlay.inert = true;
     controls.enabled = true;
+    setSceneInert(false);
     popupTrigger.focus();
     gsap.to(camera, { zoom: 1, duration: 1.5, ease: 'power3.inOut', overwrite: true,
-        onUpdate: () => camera.updateProjectionMatrix() });
+        onUpdate: () => camera.updateProjectionMatrix(),
+        onComplete: () => {
+            hero.updateOverlay(camera);
+            if (popupTrigger.closest('.hero-actions')) popupTrigger.focus();
+        } });
     gsap.to(controls.target, { x: 0, y: 0, z: 0, duration: 1.5, ease: 'power3.inOut', overwrite: true });
 }
-menuBtn.addEventListener('click', () => openPopup());
+const menu = document.getElementById('portfolio-menu');
+const menuItems = [...menu.querySelectorAll('button')];
+function setSceneInert(inert) {
+    document.querySelectorAll('.ui-buttons, .hero-accessible, .point, .scene-socials').forEach(element => {
+        element.inert = inert;
+    });
+}
+function closeMenu(restoreFocus = false) {
+    menu.hidden = true;
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Open navigation');
+    if (restoreFocus) menuBtn.focus();
+}
+function openMenu(last = false) {
+    menu.hidden = false;
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.setAttribute('aria-label', 'Close navigation');
+    menuItems[last ? menuItems.length - 1 : 0].focus();
+}
+menuBtn.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu(true));
+menuBtn.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        openMenu(event.key === 'ArrowUp');
+    }
+});
+menu.addEventListener('keydown', event => {
+    const index = menuItems.indexOf(document.activeElement);
+    let next;
+    if (event.key === 'ArrowDown') next = (index + 1) % menuItems.length;
+    if (event.key === 'ArrowUp') next = (index + menuItems.length - 1) % menuItems.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = menuItems.length - 1;
+    if (next !== undefined) { event.preventDefault(); menuItems[next].focus(); }
+});
+document.addEventListener('pointerdown', event => {
+    if (!menu.hidden && !menu.contains(event.target) && !menuBtn.contains(event.target)) closeMenu();
+});
+document.addEventListener('focusin', event => {
+    if (!menu.hidden && !menu.contains(event.target) && event.target !== menuBtn) closeMenu();
+});
 closeBtn.addEventListener('click', closePopup);
 popupOverlay.addEventListener('click', event => { if (event.target === popupOverlay) closePopup(); });
 document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !menu.hidden) { event.preventDefault(); closeMenu(true); return; }
     if (popupOverlay.classList.contains('hidden')) return;
     if (event.key === 'Escape') closePopup();
     if (event.key === 'Tab') {
@@ -942,13 +960,18 @@ document.addEventListener('keydown', event => {
     }
 });
 document.querySelectorAll('[data-section]').forEach(button => {
-    button.addEventListener('click', () => selectTab(button.dataset.section, true));
+    button.addEventListener('click', () => {
+        if (popupOverlay.classList.contains('hidden')) openPopup(button.dataset.section, button);
+        else selectTab(button.dataset.section, true);
+    });
 });
 
 // Theme මාරු කිරීම (Dark / Light) - Smooth Effect
 themeBtn.addEventListener('click', () => {
     const isLightMode = document.body.classList.toggle('light-mode');
     themeBtn.setAttribute('aria-pressed', String(isLightMode));
+    themeBtn.setAttribute('aria-label', isLightMode ? 'Toggle dark theme' : 'Toggle light theme');
+    hero.setTheme(isLightMode);
     
     if (isLightMode) {
         // 1. තරු ටික smooth විදිහට කුඩා වී මැකී යාම (Size එක 0 කිරීම)

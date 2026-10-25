@@ -347,3 +347,96 @@ h3 { font-size:17px; line-height:1.4; font-weight:550; }
 @media(max-width:700px) { .popup-overlay { padding:10px; }.popup-container { height:94dvh; border-radius:18px; }.popup-topline { padding:12px 18px; }.popup-header { padding:0 18px; }.tabs { gap:20px; overflow-x:auto; scrollbar-width:thin; }.tab-btn { padding:16px 0; font-size:11px; }.tab-btn>span { display:none; }.popup-content { padding:24px 18px; }.about-grid,.skill-grid,.contact-grid { grid-template-columns:1fr; }.projects-grid { grid-template-columns:1fr; }.project-art { height:155px; }.project-body p { min-height:0; }.cert-grid { grid-template-columns:1fr; }.activity-grid { grid-template-columns:1fr; }.subheading { align-items:flex-start; }.subheading>span { text-align:right; }.education-list article { flex-wrap:wrap; }.education-list .pill { margin-left:23px; }.popup-footer { padding:13px 18px; font-size:9px; gap:12px; }.scene-brand { left:18px; top:22px; font-size:9px; }.scene-brand small { max-width:170px; line-height:1.5; }.scene-caption { font-size:12px; }.profile-card { padding:22px; }.profile-card h3 { font-size:23px; }.monogram { width:44px; height:44px; right:18px; top:20px; font-size:18px; } }
 @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
 @media(max-width:700px) { .tabs { scrollbar-width:none; }.tabs::-webkit-scrollbar { display:none; } }
+/* Starlit hero: the canvas remains the only full-screen interactive surface. */
+:root { --panel:#0b1729; --card:#12243a; --ink:#edf6ff; --muted:#a3bdd8; --line:#29445f; --accent:#66c7ff; }
+body { background:radial-gradient(ellipse at 76% 48%,#123662 0%,#081728 39%,#030a13 77%); }
+body.light-mode { --panel:#f0f7ff; --card:#fff; --ink:#172f4c; --muted:#46627f; --line:#b8cee4; --accent:#0066ff; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.scene-brand { top:30px; left:3.4vw; pointer-events:none; letter-spacing:1.6px; }
+.brand-mark { font-size:37px; letter-spacing:-2.5px; }
+.brand-mark>span { color:#168bff; }
+.ui-buttons { top:28px; right:3.4vw; flex-direction:row; gap:12px; }
+.icon-btn { width:46px; height:46px; background:#07142690; border-color:#66c7ff80; box-shadow:0 0 18px #0066ff15; }
+.icon-btn:hover { background:#168bff30; border-color:#66c7ff; }
+.portfolio-menu { position:absolute; top:62px; right:0; width:260px; padding:14px; border:1px solid #168bff70; border-radius:18px; background:rgba(5,17,34,.94); backdrop-filter:blur(22px); box-shadow:0 20px 65px #0006; }
+.portfolio-menu[hidden] { display:none; }
+.menu-eyebrow { display:block; padding:10px 12px 15px; color:#8aa9c8; font-size:9px; letter-spacing:2px; }
+.portfolio-menu button { display:flex; align-items:center; gap:14px; width:100%; min-height:48px; padding:10px 12px; text-align:left; border:0; border-radius:9px; background:transparent; color:#edf6ff; cursor:pointer; font-size:14px; }
+.portfolio-menu button span:first-child { color:#66c7ff; font-size:10px; }
+.portfolio-menu button span:last-child { margin-left:auto; color:#66c7ff; }
+.portfolio-menu button:hover,.portfolio-menu button:focus-visible { background:#168bff24; }
+.hero-accessible { position:fixed; inset:0; z-index:45; pointer-events:none; }
+.hero-details { position:absolute; top:0; left:0; width:var(--hero-width,42vw); visibility:hidden; pointer-events:none; will-change:transform; }
+.hero-roles { color:#edf6ff; font-size:clamp(14px,1.65vw,25px); line-height:1.4; letter-spacing:-.4px; }
+.hero-roles span { color:#168bff; }
+.hero-description { margin-top:10px; font-size:clamp(12px,1.23vw,19px); color:#a2c8ee; line-height:1.5; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:16px; margin-top:32px; }
+.hero-actions button { min-height:52px; border-radius:40px; padding:0 27px; color:white; font-size:14px; font-weight:600; cursor:pointer; pointer-events:auto; transition:background .2s,box-shadow .2s; }
+.hero-primary { border:1px solid #66c7ff; background:linear-gradient(170deg,#168bff,#0066ff); box-shadow:0 0 24px #0066ff50,inset 0 1px 1px #ffffff50; }
+.hero-primary span { margin-left:18px; font-size:22px; font-weight:400; }
+.hero-primary:hover { box-shadow:0 0 32px #168bff80; }
+.hero-secondary { border:1px solid #c5d8ec; background:#08152875; }
+.hero-secondary:hover { background:#168bff28; }
+.scene-caption { left:auto; right:3.4vw; bottom:30px; text-align:right; font-size:13px; }
+.scene-caption b { color:#168bff; margin:0 5px; }
+.scene-caption span { color:#a3bdd8; opacity:1; font-size:10px; }
+.scene-socials { position:fixed; bottom:36px; left:3.4vw; display:flex; align-items:center; gap:22px; z-index:45; font-size:12px; }
+.scene-socials a { text-decoration:none; }
+.scene-socials a:hover { color:#66c7ff; }
+.scene-socials>span { width:1px; height:19px; background:#46627f; }
+.scene-socials::after { content:''; width:clamp(30px,25vw,420px); height:1px; background:linear-gradient(90deg,#46627f,transparent); margin-left:8px; pointer-events:none; }
+.point .label { width:44px; height:44px; top:-22px; left:-22px; line-height:40px; border:1px solid #d7efff; background:#05172bd9; box-shadow:0 0 0 4px #168bff14,0 0 18px #168bff65; font-weight:500; }
+.point .label:hover,.point .label:focus-visible { background:#0066ff; color:white; }
+.point .text { border-color:#168bff70; background:#081728ed; }
+.point:focus-within .text { opacity:1; }
+.portfolio-open .hero-accessible,.portfolio-open .point,.portfolio-open .scene-socials { visibility:hidden; }
+.portfolio-open .hero-details { visibility:hidden!important; }
+.popup-container { --card:rgba(14,35,57,.78); --line:rgba(102,199,255,.2); background:rgba(6,19,35,.8); border-color:#66c7ff50; }
+.profile-card { background:radial-gradient(ellipse at 100% 0%,#168bff18,transparent 70%),var(--card); }
+.primary-link { color:#06172c; }
+body.light-mode .hero-roles,body.light-mode .scene-socials { color:#183c61; }
+body.light-mode .hero-description,body.light-mode .scene-caption span { color:#395e80; }
+body.light-mode .hero-secondary { background:#f0f7ff90; color:#163856; border-color:#46627f; }
+body.light-mode .primary-link { color:white; }
+.hero-fallback { position:absolute; left:5.5vw; top:28vh; width:38vw; font-size:clamp(32px,5.8vw,96px); line-height:1.05; letter-spacing:-.05em; }
+.hero-font-failed .hero-details { transform:none!important; left:5.5vw; top:57vh; }
+@media(max-width:1100px) {
+    .hero-actions { gap:10px; margin-top:22px; }
+    .hero-actions button { padding:0 18px; font-size:12px; min-height:46px; }
+    .hero-primary span { margin-left:10px; }
+}
+@media(max-width:799px),(max-aspect-ratio:1.15) {
+    .scene-brand { left:5.5vw; top:22px; font-size:9px; gap:10px; }
+    .brand-mark { font-size:31px; }
+    .scene-brand small { display:none; }
+    .ui-buttons { top:18px; right:5.5vw; gap:8px; }
+    .scene-brand>span:last-child { max-width:120px; font-size:9px; line-height:1.5; }
+    .icon-btn { width:44px; height:44px; }
+    .hero-roles { font-size:clamp(15px,3vw,23px); }
+    .hero-description { font-size:clamp(12px,2.3vw,17px); margin-top:5px; }
+    .hero-actions { margin-top:16px; gap:12px; }
+    .hero-actions button { min-height:44px; padding:0 20px; }
+    .scene-caption { right:5.5vw; bottom:22px; font-size:11px; }
+    .scene-caption span { font-size:9px; max-width:160px; }
+    .scene-socials { left:5.5vw; bottom:28px; gap:12px; font-size:10px; }
+    .scene-socials::after { display:none; }
+    .hero-fallback { top:15vh; width:89vw; font-size:11vw; }
+    .hero-font-failed .hero-details { top:34vh; }
+}
+@media(max-height:550px) and (min-width:800px) {
+    .scene-brand { top:14px; }
+    .ui-buttons { top:14px; }
+    .hero-actions { margin-top:12px; }
+    .scene-caption { bottom:12px; }
+    .scene-socials { bottom:18px; }
+}
+@media(max-width:799px),(max-aspect-ratio:1.15) {
+    .hero-fallback { top:130px; width:min(84vw,520px); font-size:clamp(32px,11vw,80px); }
+    .hero-font-failed .hero-details { top:calc(140px + clamp(70px,24vw,176px)); }
+}
+@media(max-width:380px) {
+    .hero-actions { gap:8px; }
+    .hero-actions button { padding:0 14px; font-size:11px; }
+    .hero-primary span { margin-left:8px; font-size:20px; }
+}
+body.light-mode .hero-fallback { color:#193b60; }
