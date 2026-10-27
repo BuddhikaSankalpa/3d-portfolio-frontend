@@ -368,7 +368,10 @@ h3 { font-size:17px; line-height:1.4; font-weight:550; }
 .cert-number { color:var(--muted); font:italic 23px Georgia,serif; }.cert-star { margin-left:auto; font-size:29px; color:var(--accent); }
 .cert-card .eyebrow { font-size:8px; margin-bottom:5px; }
 .section-note { font-size:11px; margin-top:16px; }
-.activity-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+#awards .activity-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+#awards .activity-grid .card-icon svg { display:block; width:26px; height:26px; }
+@media(max-width:1050px) { #awards .activity-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) { #awards .activity-grid { grid-template-columns:1fr; } }
 #contact .contact-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; align-items:stretch; }
 #contact .contact-card h3 { margin-top:14px; }
 #contact .contact-detail { display:block; text-decoration:none; font-size:14px; margin:22px 0; overflow-wrap:anywhere; }
