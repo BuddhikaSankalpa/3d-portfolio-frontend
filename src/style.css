@@ -320,6 +320,9 @@ h3 { font-size:17px; line-height:1.4; font-weight:550; }
 .skill-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:17px; }
 .chips span { background:var(--panel); border:1px solid var(--line); padding:7px 10px; border-radius:6px; font-size:11px; color:var(--ink); }
+.skill-grid .chips span { max-width:100%; padding:8px 12px; font-size:12px; overflow-wrap:anywhere; cursor:default; transition:transform .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease; }
+@media(hover:hover) { .skill-grid .chips span:hover { transform:translateY(-2px); background:color-mix(in srgb,var(--panel) 85%,var(--accent)); border-color:color-mix(in srgb,var(--line) 35%,var(--accent)); box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 24%,transparent); } }
+@media(prefers-reduced-motion:reduce) { .skill-grid .chips span:hover { transform:none; } }
 .subheading { display:flex; justify-content:space-between; gap:15px; align-items:center; margin:30px 0 15px; }
 .subheading>span { color:var(--muted); font-size:11px; }
 .education-list { padding:0 20px; border:1px solid var(--line); border-radius:15px; }
@@ -345,7 +348,21 @@ h3 { font-size:17px; line-height:1.4; font-weight:550; }
 .project-links>div { display:flex; justify-content:space-between; gap:10px; margin-top:17px; }
 .project-links>div a { color:var(--muted); font-size:11px; text-decoration:none; }
 .project-links>div a:hover { color:var(--accent); }
-.leadership { display:flex; gap:20px; align-items:center; }.leadership .card-icon { margin:0; }
+.experience-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; }
+.experience-card { display:grid; grid-template-columns:42px minmax(0,1fr) auto; grid-template-rows:auto auto auto; column-gap:20px; align-items:center; min-width:0; padding:24px; }
+.experience-icon { grid-column:1; grid-row:1 / 4; display:grid; place-items:center; width:42px; height:42px; border:1px solid var(--line); border-radius:12px; background:color-mix(in srgb,var(--panel) 86%,var(--accent)); color:var(--accent); }
+.experience-icon svg { width:24px; height:24px; }
+.experience-card h3 { grid-column:2; grid-row:1; line-height:1.3; overflow-wrap:anywhere; }
+.experience-details { grid-column:2; grid-row:2; display:grid; gap:9px; width:100%; margin:8px 0 0; }
+.experience-details div { display:grid; grid-template-columns:92px minmax(0,1fr); gap:8px; }
+.experience-details dt { color:var(--accent); font-size:10px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; }
+.experience-details dd { margin:0; color:var(--muted); font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+.experience-description { grid-column:2; grid-row:3; margin:8px 0 0; font-size:12px; }
+.experience-link { grid-column:3; grid-row:1 / 4; justify-self:end; display:inline-flex; align-items:center; gap:8px; margin:0; padding:9px 12px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--accent); font-size:12px; font-weight:650; text-decoration:none; transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.experience-link svg { width:15px; height:15px; flex:none; }
+.experience-link:hover { background:color-mix(in srgb,var(--panel) 82%,var(--accent)); border-color:var(--accent); box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent); }
+.experience-link:focus-visible { outline:2px solid var(--accent); outline-offset:3px; background:color-mix(in srgb,var(--panel) 82%,var(--accent)); border-color:var(--accent); }
+@media(max-width:700px) { .experience-card { grid-template-columns:minmax(0,1fr); grid-template-rows:none; padding:20px; }.experience-card > .experience-icon,.experience-card > h3,.experience-card > .experience-details,.experience-card > .experience-description,.experience-card > .experience-link { grid-column:1; grid-row:auto; }.experience-icon { margin-bottom:14px; }.experience-details { margin-top:12px; }.experience-link { justify-self:start; margin-top:18px; } }
 .small-copy { font-size:11px; }
 .cert-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }.cert-card { display:flex; align-items:center; gap:18px; }
 .cert-number { color:var(--muted); font:italic 23px Georgia,serif; }.cert-star { margin-left:auto; font-size:29px; color:var(--accent); }
